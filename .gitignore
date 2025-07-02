@@ -1,0 +1,10 @@
+# Ignore Python virtual environments
+venv/
+.env
+__pycache__/
+*.py[cod]
+*.egg
+*.egg-info/
+dist/
+build/
+.DS_Store
