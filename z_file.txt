@@ -374,16 +374,15 @@ def execute_url_posting_workflow(user_id: str,url: str) -> str:
             reddit_title, generated_text = generate_post_function(formatted_content)
 
         st.success("✅ Social media post generated.")
-        content_to_save = f"**Title:** {reddit_title}\n\n**Post Text:**\n{generated_text}"
-
+        content_to_save = f"**Generated Content from URL:**\n\n**Title:** {reddit_title}\n\n**Post:**\n{generated_text}"
         save_chat_message(user_id=user_id, role="assistant", content=content_to_save, report_id=None)
         print("-> Saved generated post preview to chat history.")
 
         
         # 🔽 Display the generated content to the user
         st.subheader("📝 Generated Reddit Post")
-        # st.markdown(f"**Title:** {reddit_title}")
-        # st.markdown(f"**Post Text:**\n\n{generated_text}")
+        st.markdown(f"**Title:** {reddit_title}")
+        st.markdown(f"**Post Text:**\n\n{generated_text}")
 
         with st.spinner("Finding and selecting the best image..."):
             all_image_urls = extract_images_from_firecrawl(raw_response)
@@ -391,8 +390,8 @@ def execute_url_posting_workflow(user_id: str,url: str) -> str:
         
         image_path = None
         if best_image_url:
-            # st.write(f"🖼️ Best image selected:")
-            # st.image(best_image_url)
+            st.write(f"🖼️ Best image selected:")
+            st.image(best_image_url)
             image_path = "temp_image_for_post.jpg"
             img_data = requests.get(best_image_url).content
             with open(image_path, "wb") as handler:
@@ -400,13 +399,19 @@ def execute_url_posting_workflow(user_id: str,url: str) -> str:
         else:
             st.warning("⚠️ No suitable image was found or selected.")
 
-        if best_image_url:
-            content_to_save += f"\n\n**Suggested Image:**\n{best_image_url}"
+        # Post to platforms
+        results = []
+        try:
+            with st.spinner("Posting to Reddit..."):
+                reddit_url = post_to_reddit(reddit_title, generated_text, image_path=image_path)
+            results.append(f"✅ Successfully posted to Reddit: {reddit_url}")
+        except Exception as e:
+            results.append(f"❌ Failed to post to Reddit: {e}")
 
-        # if image_path and os.path.exists(image_path):
-        #     os.remove(image_path)
+        if image_path and os.path.exists(image_path):
+            os.remove(image_path)
             
-        return content_to_save
+        return "\n\n".join(results)
     except Exception as e:
         st.error(f"An error occurred in the URL posting workflow: {e}")
         return f"❌ Workflow failed: {e}"
@@ -416,255 +421,85 @@ def execute_url_posting_workflow(user_id: str,url: str) -> str:
 # --- ROUTER FUNCTION (The Brains of the Operation) ---
 # ==============================================================================
 
-def route_user_request(user_prompt: str, chat_history: List[Dict[str, str]]) -> dict:
+def route_user_request(user_prompt: str) -> dict:
     """
-    Analyzes the user's prompt and chat history to decide which tool to use.
+    Analyzes the user's prompt to decide which tool to use and extracts arguments.
     """
-    print(f"\n--- [ROUTER] Analyzing user prompt with chat history...")
-
+    print(f"\n--- [ROUTER] Analyzing user prompt: '{user_prompt}' ---")
+    
     llm = ChatOpenAI(model="gpt-4o", temperature=0)
+    
+    router_prompt = f"""You are an intelligent routing agent. Your job is to analyze a user's prompt and determine which of two available tools to call. You must also extract the necessary arguments for that tool.
 
-    formatted_history = "\n".join([f"{msg['role']}: {msg['content']}" for msg in chat_history])
+    The available tools are:
+    1.  `reddit_research`: Use this tool if the user is asking a question or wants to find information about a general topic, sentiment, or what people are saying. It requires a 'topic' and a 'question'.
+    2.  `url_poster`: Use this tool if the user provides a specific URL and wants to create and post content based on it. It requires a 'url'.
 
-    router_prompt = f"""You are an intelligent routing agent. Your job is to analyze the latest user prompt in the context of the entire chat history and determine which of the four available tools is appropriate to call.
+    Analyze the user's prompt below. Respond with ONLY a single, raw JSON object in the specified format. Do NOT add explanations or markdown formatting.
 
-    **Chat History:**
-    <history>
-    {formatted_history}
-    </history>
+    Example for Reddit research:
+    {{
+      "tool": "reddit_research",
+      "args": {{
+        "topic": "software engineer job market canada",
+        "question": "what are software engineers in canada saying about the job market"
+      }}
+    }}
 
-    **Available Tools:**
-    1. `revise_post`: Use this tool if the user wants to change or edit the most recent assistant message.  
-        - Required field: `"revision_request"` (a single string describing all changes, such as: "Change the title to 'New Title' and add a line at the end that says 'Faiq has said all of this.'")
-
-    2. `direct_post`: Use this tool if the user provides full text and explicitly wants to publish it.  
-        - Required field: `"text_to_post"` (the full content to post)
-
-    3. `reddit_research`: Use this tool if the user is asking about general Reddit-based questions, public sentiment, or real opinions.  
-        - Required fields: `"topic"` and `"question"`
-
-    4. `url_poster`: Use this if the user provides a URL and wants to auto-generate a social media post from it.  
-        - Required field: `"url"`
-
-    Respond ONLY with a valid raw JSON object using one of the tool formats below. Do NOT add any explanation or Markdown.
-
-    **Reddit Research Example:**
-    {{ "tool": "reddit_research", "args": {{ "topic": "ai jobs germany", "question": "what is the situation of ai job market in germany?" }} }}
-
-    **URL Poster Example:**
-    {{ "tool": "url_poster", "args": {{ "url": "https://example.com" }} }}
-
-    **Revise Post Example:**
-    {{ "tool": "revise_post", "args": {{ "revision_request": "Change the title to 'AI Trends 2025' and add 'This was written by Faiq.' at the end." }} }}
-
-    **Direct Post Example:**
-    {{ "tool": "direct_post", "args": {{ "text_to_post": "Here is the complete post text the user wants to share..." }} }}
-
-    **User Prompt:** "{user_prompt}"
+    User Prompt: "{user_prompt}"
     """
-
-
+    
     response = llm.invoke(router_prompt)
     raw_response_content = response.content.strip()
     print(f"--- [ROUTER] Raw LLM response:\n{raw_response_content}\n---")
-
+    
     try:
+        # Robustly find and parse the JSON object
         json_match = re.search(r'\{.*\}', raw_response_content, re.DOTALL)
         if not json_match:
-            raise ValueError("No JSON object found in LLM response.")
-
+            raise ValueError("No JSON object found in the LLM response.")
+        
         json_string = json_match.group(0)
         decision = json.loads(json_string)
-
-        # Normalize if "arguments" is used
+        
+        # --- THE CRITICAL FIX: NORMALIZE THE ARGUMENTS KEY ---
+        # The LLM sometimes uses 'arguments' instead of 'args'. We handle both.
         if "arguments" in decision and "args" not in decision:
+            print("--- [ROUTER] Normalizing 'arguments' key to 'args'...")
             decision["args"] = decision.pop("arguments")
-
-        # Handle flat cases like { "url": "..." }
-        if "tool" not in decision:
-            if "url" in decision:
-                decision = {
-                    "tool": "url_poster",
-                    "args": {"url": decision["url"]}
-                }
-            elif "text_to_post" in decision:
-                decision = {
-                    "tool": "direct_post",
-                    "args": {"text_to_post": decision["text_to_post"]}
-                }
-            else:
-                raise ValueError("Malformed JSON: missing 'tool' or unrecognized structure.")
-
+        
+        # --- Validation ---
         tool = decision.get("tool")
         args = decision.get("args", {})
-
+        
         if not tool or not isinstance(args, dict):
-            raise ValueError("Malformed JSON: missing 'tool' or 'args'.")
-
-        # Per-tool validation
+            raise ValueError("Parsed JSON is malformed: missing 'tool' or 'args'.")
+            
         if tool == "reddit_research" and not ("topic" in args and "question" in args):
-            raise ValueError("Missing 'topic' or 'question' for reddit_research.")
-        if tool == "url_poster" and "url" not in args:
-            raise ValueError("Missing 'url' for url_poster.")
-        if tool == "revise_post" and "revision_request" not in args:
-            raise ValueError("Missing 'revision_request' for revise_post.")
-        if tool == "direct_post" and "text_to_post" not in args:
-            raise ValueError("Missing 'text_to_post' for direct_post.")
+             raise ValueError("Missing 'topic' or 'question' for reddit_research.")
 
-        print(f"--- [ROUTER] ✅ Decision: tool = '{tool}', args = {args}")
+        if tool == "url_poster" and not "url" in args:
+             raise ValueError("Missing 'url' for url_poster.")
+
+        print(f"--- [ROUTER] Decision successful: Call tool '{tool}' with args {args} ---")
         return decision
 
     except (json.JSONDecodeError, ValueError) as e:
-        print(f"--- [ROUTER] ❌ Parsing/validation error: {e}")
+        print(f"--- [ROUTER] ❌ Error parsing or validating router response: {e} ---")
         return {"tool": "error", "args": {"reason": f"Could not understand the request: {e}"}}
     except Exception as e:
-        print(f"--- [ROUTER] ❌ Unexpected error: {e}")
+        print(f"--- [ROUTER] ❌ Unexpected routing error: {e} ---")
         return {"tool": "error", "args": {"reason": f"An internal error occurred: {e}"}}
 
+# ==============================================================================
+# --- UTILITY AND WORKER FUNCTIONS ---
+# (Place all your other functions like find_relevant_subreddits, generate_post_function, etc. here)
+# ...
+# ==============================================================================
 
-def execute_revision_workflow(user_id: str, revision_request: str) -> str:
-    """
-    Revises the most recent assistant-generated post based on user feedback.
-    Extracts from st.session_state.messages instead of session_state.post_draft.
-    """
-    print("\n" + "="*50)
-    print("--- 🚀 WORKFLOW START: Post Revision ---")
-    st.info(f"✍️ Revising the draft with your feedback: '{revision_request}'...")
-    print("the messages in the session state:")
-    print(st.session_state.messages)
-    # Ensure chat history exists
-    messages = st.session_state.get("messages", [])
-    print("the messages found by the current syntax are:")
-    print(messages)
-    print(f"🔍 Total messages in session: {len(messages)}")
-
-    # Find the latest assistant message that contains the original post
-    last_assistant_post = None
-    for msg in reversed(messages):
-        if msg["role"] == "assistant" and "**Post Text:**" in msg["content"]:
-            last_assistant_post = msg["content"]
-            break
-
-    if not last_assistant_post:
-        error_msg = "❌ Could not find a previously generated post to revise. Please create a post first."
-        st.error(error_msg)
-        return error_msg
-
-    print("✅ Found previous assistant post for revision.")
-    
-    # Extract title and post text
-    title = "Untitled"
-    original_post_text = ""
-    
-    try:
-        title_match = re.search(r"\*\*Title:\*\*\s*(.*)", last_assistant_post)
-        if title_match:
-            title = title_match.group(1).strip()
-            print(f"📝 Extracted Title: {title}")
-
-        text_match = re.search(r"\*\*Post Text:\*\*\n(.+?)(\n\n|\Z)", last_assistant_post, re.DOTALL)
-        if text_match:
-            original_post_text = text_match.group(1).strip()
-            print(f"📝 Extracted Post Text:\n{original_post_text[:200]}...")  # Print first 200 chars
-        else:
-            raise ValueError("Post Text not found.")
-    except Exception as e:
-        error_msg = f"❌ Failed to extract original content: {e}"
-        st.error(error_msg)
-        return error_msg
-
-    # LLM-based revision
-    with st.spinner("Revising the post..."):
-        llm = ChatOpenAI(model="gpt-4o", temperature=0.7, openai_api_key=OPENAI_API_KEY)
-        revision_prompt = f"""You are a copy editor. Revise the following social media post based on the user's instructions.
-
-<Original_Post_Text>
-{original_post_text}
-</Original_Post_Text>
-
-<User_Revision_Request>
-{revision_request}
-</User_Revision_Request>
-
-Provide ONLY the full, revised post text as your response.
-"""
-        response = llm.invoke(revision_prompt)
-        revised_post_text = response.content.strip()
-
-    print(f"✏️ Revised Post Text:\n{revised_post_text}...")  # Preview first 200 chars
-
-    # Optional: preserve any image link if present in previous response
-    image_url = None
-    image_match = re.search(r"\*\*Suggested Image:\*\*\n(.+)", last_assistant_post)
-    if image_match:
-        image_url = image_match.group(1).strip()
-        print(f"🖼️ Preserved image URL: {image_url}")
-
-    # Construct revised message preview
-    revised_preview = ""
-    revised_preview += f"**Title:** {title}\n\n"
-    revised_preview += f"**Post Text:**\n{revised_post_text}\n\n"
-    if image_url:
-        revised_preview += f"**Suggested Image:**\n{image_url}"
-    print("📦 Revised post preview constructed.")
-    print(revised_preview)
-    # Append to Streamlit message history
-    if "messages" not in st.session_state:
-        st.session_state.messages = []
-
-    st.session_state.messages.append({
-        "role": "assistant",
-        "content": revised_preview
-    })
-
-    print("✅ Revised post added to Streamlit session state.")
-    
-    st.success("✅ Post draft revised successfully!")
-    save_chat_message(user_id=user_id, role="assistant", content=revised_preview)
-    return revised_preview
-
-
-
-def execute_direct_posting_workflow(user_id: str, text_to_post: str) -> str:
-    """
-    Directly posts user-provided text to social media platforms.
-    """
-    print("\n" + "="*50)
-    print("--- 🚀 WORKFLOW START: Direct Posting ---")
-    st.info(f"📬 Preparing to post your content directly...")
-
-    # Generate a generic title if needed
-    title = f"A new post from {st.session_state.username}"
-    print(f"📝 Using title: {title}")
-
-    # Format assistant message
-    formatted_post = f"**Title:** {title}\n\n**Post Text:**\n{text_to_post}"
-    print("📦 Formatted post:\n", formatted_post[:200], "...")  # Preview
-
-    # Display to user
-    st.subheader("📝 Content to be Posted")
-    st.markdown(formatted_post)
-
-    # Save to Streamlit session messages
-    if "messages" not in st.session_state:
-        st.session_state.messages = []
-
-    st.session_state.messages.append({
-        "role": "assistant",
-        "content": formatted_post
-    })
-    print("✅ Assistant message added to session state.")
-
-    # Save to DB (optional logging)
-    save_chat_message(user_id=user_id, role="assistant", content=formatted_post)
-
-    st.success("✅ Post content saved and ready!")
-
-    return formatted_post
-
-
-
-
+# ==============================================================================
+# --- STREAMLIT FRONTEND ---
+# ==============================================================================
 def main():
     print("--- [MAIN] Starting Social Media Agent application ---")
     st.set_page_config(page_title="Social Media Agent", layout="wide")
@@ -673,13 +508,13 @@ def main():
     print("--- [MAIN] Displaying app title ---")
 
     # --- Step 1: Initialize Session State ---
+    # We use session_state to track if the user is logged in.
     if 'logged_in' not in st.session_state:
         print("--- [SESSION] Initializing session state ---")
         st.session_state.logged_in = False
         st.session_state.user_id = None
         st.session_state.username = None
         st.session_state.messages = []
-        st.session_state.reddit_url_posted = None  # Initialize post URL state
         print(f"--- [SESSION] Session state initialized: logged_in={st.session_state.logged_in}, user_id={st.session_state.user_id}, username={st.session_state.username}, messages={len(st.session_state.messages)} ---")
 
     # --- Step 2: Show Login/Signup UI if not logged in ---
@@ -706,24 +541,26 @@ def main():
                 if login_button:
                     print("--- [AUTH] Login button clicked ---")
                     if login_username and login_password:
-                        print(f"--- [AUTH] Validating credentials for username: {login_username} ---")
+                        print("--- [AUTH] Validating credentials for username: {login_username} ---")
                         with st.spinner("Verifying credentials..."):
                             print("--- [AUTH] Calling verify_user() ---")
                             user_data = verify_user(login_username, login_password)
                             print(f"--- [AUTH] verify_user() returned: {user_data} ---")
                             if user_data:
+                                # On successful login, update the session state
                                 st.session_state.logged_in = True
                                 st.session_state.user_id = user_data['id']
                                 st.session_state.username = login_username
                                 print(f"--- [AUTH] Login successful: user_id={user_data['id']}, username={login_username} ---")
-                                print(f"--- [AUTH] Loading chat history for user_id: {user_data['id']} ---")
+                                # Load the user's chat history
+                                print("--- [AUTH] Loading chat history for user_id: {user_data['id']} ---")
                                 st.session_state.messages = get_chat_history(user_data['id'])
                                 print(f"--- [AUTH] Chat history loaded: {len(st.session_state.messages)} messages ---")
                                 st.success("Logged in successfully!")
                                 print("--- [AUTH] Displaying success message: 'Logged in successfully!' ---")
                                 time.sleep(1)
                                 print("--- [AUTH] Rerunning app after successful login ---")
-                                st.rerun()
+                                st.rerun() # Rerun the script to show the main app
                             else:
                                 st.error("Invalid username or password.")
                                 print("--- [AUTH] Login failed: Invalid username or password ---")
@@ -746,22 +583,23 @@ def main():
                     print("--- [AUTH] Signup button clicked ---")
                     if signup_username and signup_password:
                         try:
-                            print(f"--- [AUTH] Creating new user account for username: {signup_username} ---")
+                            print("--- [AUTH] Creating new user account for username: {signup_username} ---")
                             with st.spinner("Creating your account..."):
                                 print("--- [AUTH] Calling create_user() ---")
                                 new_user = create_user(signup_username, signup_password)
                                 print(f"--- [AUTH] create_user() returned: {new_user} ---")
+                                # On successful signup, log them in automatically
                                 st.session_state.logged_in = True
                                 st.session_state.user_id = new_user['id']
                                 st.session_state.username = signup_username
-                                st.session_state.messages = []
+                                st.session_state.messages = [] # Start with empty history
                                 print(f"--- [AUTH] Signup successful: user_id={new_user['id']}, username={signup_username}, messages={len(st.session_state.messages)} ---")
                                 st.success("Account created successfully! You are now logged in.")
                                 print("--- [AUTH] Displaying success message: 'Account created successfully!' ---")
                                 time.sleep(1)
                                 print("--- [AUTH] Rerunning app after successful signup ---")
                                 st.rerun()
-                        except ValueError as e:
+                        except ValueError as e: # Catches duplicate username error
                             st.error(e)
                             print(f"--- [AUTH] Signup failed: {e} ---")
                         except Exception as e:
@@ -778,6 +616,7 @@ def main():
         print(f"--- [APP] Displaying sidebar header: 'Welcome, {st.session_state.username}!' ---")
         if st.sidebar.button("Logout"):
             print("--- [APP] Logout button clicked ---")
+            # Clear the session state to log the user out
             for key in list(st.session_state.keys()):
                 print(f"--- [APP] Clearing session state key: {key} ---")
                 del st.session_state[key]
@@ -787,87 +626,18 @@ def main():
         st.write("Your AI assistant for Reddit research and content posting.")
         print("--- [APP] Displaying app description ---")
 
-        # Display chat history
+        # Display chat history from the session state
         print(f"--- [APP] Displaying chat history: {len(st.session_state.messages)} messages ---")
         for message in st.session_state.messages:
             with st.chat_message(message["role"]):
                 st.markdown(message["content"])
                 print(f"--- [APP] Displaying message: role={message['role']}, content='{message['content'][:50]}...' ---")
 
-        # --- Post to Reddit Button ---
-        st.markdown("---")
-        st.subheader("📤 Ready to Post?")
-        if st.session_state.get("reddit_url_posted"):
-            st.success(f"✅ Successfully posted to Reddit: {st.session_state.reddit_url_posted}")
-            st.markdown(f"[🔗 View Post on Reddit]({st.session_state.reddit_url_posted})")
-        else:
-            if st.button("🚀 Post Latest to Reddit"):
-                print("=== [UI] Post to Reddit button clicked ===")
-                messages = st.session_state.get("messages", [])
-                latest_post = None
-
-                # Find the latest assistant message
-                for msg in reversed(messages):
-                    if msg["role"] == "assistant":
-                        latest_post = msg["content"]
-                        break
-
-                if not latest_post:
-                    st.warning("⚠️ No assistant-generated content found to publish.")
-                    print("❌ Could not find a suitable assistant message to post.")
-                else:
-                    # Parse title (if present, else generate default)
-                    title_match = re.search(r"\*\*Title:\*\*\s*(.*)", latest_post)
-                    reddit_title = title_match.group(1).strip() if title_match else f"Post by {st.session_state.username}"
-
-                    # Parse text (use full content if no **Post Text:**)
-                    text_match = re.search(r"\*\*Post Text:\*\*\n(.+?)(\n\n|\Z)", latest_post, re.DOTALL)
-                    generated_text = text_match.group(1).strip() if text_match else latest_post.strip()
-
-                    # Parse image (if any)
-                    image_url = None
-                    image_path = None
-                    image_match = re.search(r"\*\*Suggested Image:\*\*\n(.+)", latest_post)
-                    if image_match:
-                        image_url = image_match.group(1).strip()
-                        try:
-                            img_data = requests.get(image_url).content
-                            image_path = "temp_image_for_post.jpg"
-                            with open(image_path, "wb") as handler:
-                                handler.write(img_data)
-                            print(f"🖼️ Downloaded image to: {image_path}")
-                        except Exception as e:
-                            print(f"❌ Failed to download image: {e}")
-                            image_path = None
-
-                    print(f"📤 Posting to Reddit with:\nTitle: {reddit_title}\nText: {generated_text[:200]}...\nImage: {image_path or 'None'}")
-
-                    try:
-                        with st.spinner("Posting to Reddit..."):
-                            # Initialize Reddit client
-                            reddit = praw.Reddit(
-                                client_id=os.getenv('REDDIT_CLIENT_ID'),
-                                client_secret=os.getenv('REDDIT_CLIENT_SECRET'),
-                                user_agent=os.getenv('REDDIT_USER_AGENT', 'Social Media Agent by Faiq'),
-                                username=os.getenv('REDDIT_USERNAME'),
-                                password=os.getenv('REDDIT_PASSWORD')
-                            )
-                            reddit_url = post_to_reddit(reddit_title, generated_text, image_path=image_path)
-                            st.session_state.reddit_url_posted = reddit_url
-                            st.success(f"✅ Successfully posted to Reddit: {reddit_url}")
-                            st.markdown(f"[🔗 View Post on Reddit]({reddit_url})")
-                            print(f"✅ Posted to Reddit: {reddit_url}")
-                            # Clean up temporary image file
-                            if image_path and os.path.exists(image_path):
-                                os.remove(image_path)
-                                print(f"--- [CLEANUP] Deleted temporary image file: {image_path}")
-                    except Exception as e:
-                        st.error(f"❌ Failed to post to Reddit: {e}")
-                        print(f"❌ Exception while posting to Reddit: {e}")
-
-        # --- Get New User Input ---
+        # Get new user input
         if user_prompt := st.chat_input("What would you like to do?"):
             print(f"--- [APP] User submitted prompt: '{user_prompt}' ---")
+            # Save and display user's new message
+            print(f"--- [APP] Saving user message for user_id={st.session_state.user_id} ---")
             save_chat_message(user_id=st.session_state.user_id, role="user", content=user_prompt)
             st.session_state.messages.append({"role": "user", "content": user_prompt})
             print(f"--- [APP] Appended user message to session state: {len(st.session_state.messages)} messages total ---")
@@ -879,13 +649,13 @@ def main():
             with st.chat_message("assistant"):
                 with st.spinner("🧠 Analyzing your request..."):
                     print("--- [APP] Calling route_user_request() ---")
-                    decision = route_user_request(user_prompt, st.session_state.messages)
+                    decision = route_user_request(user_prompt)
                     print(f"--- [APP] route_user_request() returned: {decision} ---")
                     tool_to_call = decision.get("tool")
                     args = decision.get("args", {})
                     print(f"--- [APP] Selected tool: {tool_to_call}, args: {args} ---")
 
-                response_content = ""
+                # Execute the chosen workflow, passing the user_id
                 if tool_to_call == "reddit_research":
                     topic = args.get("topic")
                     question = args.get("question")
@@ -908,37 +678,23 @@ def main():
                     else:
                         response_content = "I need a URL to post about."
                         print("--- [APP] URL posting workflow failed: Missing URL ---")
-                elif tool_to_call == "revise_post":
-                    revision_request = args.get("revision_request")
-                    print(f"--- [APP] Revise post workflow selected: revision_request='{revision_request}' ---")
-                    if revision_request:
-                        print(f"--- [APP] Calling execute_revision_workflow(user_id={st.session_state.user_id}, revision_request={revision_request}) ---")
-                        response_content = execute_revision_workflow(st.session_state.user_id, revision_request)
-                        print(f"--- [APP] Revise workflow returned: {response_content[:50]}... ---")
-                    else:
-                        response_content = "I need specific revision instructions to proceed."
-                        print("--- [APP] Revise workflow failed: Missing revision_request ---")
-                elif tool_to_call == "direct_post":
-                    text_to_post = args.get("text_to_post")
-                    print(f"--- [APP] Direct post workflow selected: text_to_post='{text_to_post[:50] if text_to_post else ''}...' ---")
-                    if text_to_post:
-                        print(f"--- [APP] Calling execute_direct_posting_workflow(user_id={st.session_state.user_id}, text_to_post=<hidden>) ---")
-                        response_content = execute_direct_posting_workflow(st.session_state.user_id, text_to_post)
-                        print(f"--- [APP] Direct post workflow returned: {response_content[:50]}... ---")
-                    else:
-                        response_content = "Please provide the full text you'd like to post."
-                        print("--- [APP] Direct post workflow failed: Missing text_to_post ---")
-                else:
+                
+                else: # Handles the 'error' case from the router
                     response_content = args.get("reason", "I'm sorry, I couldn't understand that request.")
                     print(f"--- [APP] Router error: {response_content} ---")
-
-                # Display the final response and save to history
+                
+                # Display the final response
                 st.markdown(response_content)
                 print(f"--- [APP] Displaying assistant response: {response_content[:50]}... ---")
+                # The workflow now handles saving, but we still need to update the UI state
                 st.session_state.messages.append({"role": "assistant", "content": response_content})
                 print(f"--- [APP] Appended assistant response to session state: {len(st.session_state.messages)} messages total ---")
+                # We need to rerun to see the latest message immediately
+                print("--- [APP] Rerunning app to update UI with latest message ---")
 
+# --- Entry Point ---
 if __name__ == "__main__":
     print("--- [START] Executing main() ---")
+    # Ensure all your helper/worker functions are defined above this line
     main()
     print("--- [END] main() execution completed ---")

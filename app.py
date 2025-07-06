@@ -340,8 +340,8 @@ def find_relevant_subreddits(topic: str, limit: int = 20)->list[str]:
     
     # This improved prompt asks for niche communities, which is key.
     prompt = f"""You are a Reddit search expert. For the given topic, list the best {limit} subreddits to find high-quality, specific discussions.
-    Prioritize niche subreddits over massive general ones. For example, for "Canadian immigration for tech workers", prefer r/ImmigrationCanada over just r/canada.
-                                                    
+    Prioritize niche subreddits over massive general ones. For example, for "Canadian immigration for tech workers", prefer r/ImmigrationCanada over just r/canada.try to find as many subreddits specifc to the topic
+    give as many subreddits as possible, and try to exceed the limit if you can find more relevant ones.but relevance should be useful like if i search for ai agents it should not go search robotics and all instead it should look for specifc communities related to the topic for example langchain autocgpt are relevat communities                                                
     Do not include the "r/" prefix. Respond with a comma-separated list and nothing else.
     
     Topic: "{topic}"
@@ -355,7 +355,7 @@ def find_relevant_subreddits(topic: str, limit: int = 20)->list[str]:
         print(f"<- Failed to find subreddits: {e}")
         return []
 
-def search_and_filter_posts(reddit, subreddits: list[str], topic: str, search_limit_per_sub: int = 25) -> tuple[list, list, list]:
+def search_and_filter_posts(reddit, subreddits: list[str], topic: str, search_limit_per_sub: int = 50) -> tuple[list, list, list]:
     """
     Searches for posts and comments, scores them, and returns three distinct lists:
     1. Top overall submissions (PRAW objects)
@@ -451,15 +451,15 @@ Topic: "{topic}"
     print("\n🏁 Stage 4: Selecting top-ranked results...")
 
     scored_submissions.sort(key=lambda x: x[0], reverse=True)
-    top_submissions = [sub for score, sub in scored_submissions[:4]]
+    top_submissions = [sub for score, sub in scored_submissions[:10]]
     print(f"✔️ Top Submissions Selected: {len(top_submissions)}")
 
     scored_posts.sort(key=lambda x: x[0], reverse=True)
-    top_individual_posts = [sub for score, sub in scored_posts[:20]]
+    top_individual_posts = [sub for score, sub in scored_posts[:40]]
     print(f"✔️ Top Individual Posts Selected: {len(top_individual_posts)}")
 
     scored_comments.sort(key=lambda x: x[0], reverse=True)
-    top_individual_comments = [comment for score, comment in scored_comments[:40]]
+    top_individual_comments = [comment for score, comment in scored_comments[:50]]
     print(f"✔️ Top Individual Comments Selected: {len(top_individual_comments)}")
 
     print("\n✅ Advanced Search & Filter completed successfully.")
@@ -569,78 +569,109 @@ def scrape_validated_posts(
     return scraped_data
 
 from math import ceil
+import google.generativeai as genai
+
 def generate_report_from_posts(topic: str, consolidated_data: list[dict]) -> str:
     """
-    Generates a structured report from the consolidated data, now handling
-    different item types safely.
+    Generates a deep, narrative-rich report from consolidated Reddit data using a
+    two-turn conversational approach with the Gemini API.
     """
-    print("\n📝 Generating comprehensive report from consolidated Reddit data...")
+    print("\n📝 Generating DEEP report from consolidated Reddit data using Gemini...")
 
-    # --- Step 1: Format the consolidated data into a single, structured text block ---
-    # This replaces the complex batching logic and makes the process more reliable.
+    # --- Step 1: Configure Gemini ---
+    GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
+    if not GEMINI_API_KEY:
+        print("⚠️ GEMINI_API_KEY not found. Cannot generate Gemini report.")
+        return "# Report Generation Failed\n\nGemini API Key is not configured."
+
+    genai.configure(api_key=GEMINI_API_KEY)
+    # Using gemini-1.5-flash for speed and its large context window.
+    model = genai.GenerativeModel('gemini-1.5-flash-latest')
     
+    # Start a chat session to maintain context between the two turns
+    chat = model.start_chat()
+
+    # --- Step 2: Format the data into a single text block ---
+    # (This part is similar to before, but with better print statements)
     llm_context_text = ""
-    print("-> Formatting consolidated data for the final LLM prompt...")
+    print("-> Formatting consolidated data for the LLM prompts...")
 
     for i, item in enumerate(consolidated_data):
         item_type = item.get('type', 'unknown')
-        print(f"  - Formatting item {i+1}/{len(consolidated_data)} of type: '{item_type}'")
-
         if item_type == 'full_submission':
-            llm_context_text += f"\n\n--- Full Discussion Thread ---\n"
-            llm_context_text += f"Title: {item.get('title', 'N/A')}\n"
-            llm_context_text += f"Post Body: {item.get('selftext', '')}\n"
+            llm_context_text += f"\n\n--- Discussion Thread Start ---\nTitle: {item.get('title', 'N/A')}\nPost Body: {item.get('selftext', 'No body text.')}\n"
             if item.get('top_comments'):
-                llm_context_text += "Top Comments:\n"
+                llm_context_text += "Key Comments:\n"
                 for c in item['top_comments']:
                     llm_context_text += f"- (Score: {c.get('score', 0)}) {c.get('body', '')}\n"
-        
+            llm_context_text += "--- Discussion Thread End ---\n"
         elif item_type == 'individual_post':
-            llm_context_text += f"\n\n--- Relevant Post (Text Only) ---\n"
-            llm_context_text += f"Title: {item.get('title', 'N/A')}\n"
-            llm_context_text += f"Post Body: {item.get('selftext', '')}\n"
-            
+            llm_context_text += f"\n\n--- Relevant Post ---\nTitle: {item.get('title', 'N/A')}\nPost Body: {item.get('selftext', '')}\n--- End Relevant Post ---\n"
         elif item_type == 'comment_nuggets':
-            llm_context_text += f"\n\n--- Highly Relevant Individual Comments (from various threads) ---\n"
+            llm_context_text += f"\n\n--- Highly Relevant Individual Comments ---\n"
             if item.get('comments'):
                 for c in item['comments']:
                     llm_context_text += f"- (Score: {c.get('score', 0)}) \"{c.get('body', '')}\"\n"
-        else:
-            print(f"  - ⚠️ Skipping unknown item type: {item_type}")
-
+            llm_context_text += "--- End Individual Comments ---\n"
+    
     if not llm_context_text.strip():
-        print("⚠️ No valid data was formatted for the report. Aborting.")
+        print("⚠️ No valid data was formatted. Aborting report generation.")
         return f"# Report on {topic}\n\nNo relevant content could be processed."
 
-    # --- Step 2: Generate the final report in a single, powerful LLM call ---
-    llm = ChatOpenAI(model="gpt-4-turbo", temperature=0.2, openai_api_key=OPENAI_API_KEY)
+    # --- Step 3: Split the data for the two-turn conversation ---
+    print(f"-> Total context size: {len(llm_context_text)} characters. Splitting into two turns.")
+    midpoint = len(llm_context_text) // 2
+    part1_text = llm_context_text[:midpoint]
+    part2_text = llm_context_text[midpoint:]
 
-    prompt = f"""You are a world-class research analyst. Your task is to synthesize a collection of Reddit discussions into a single, coherent report about the topic: '{topic}'.
+    # --- Step 4: First Turn - Ingest and Initial Analysis ---
+    prompt1 = f"""You are a world-class research analyst building a deep and comprehensive knowledge base about the topic: '{topic}'.
+    I am providing you with the first half of the raw data scraped from Reddit. This data includes full discussion threads, individual relevant posts, and curated 'golden nugget' comments.
 
-    You have been provided with full discussion threads, individual relevant posts, and a curated list of 'golden nugget' comments.
+    Your task for this first step is to read, understand, and internally process all of this information. Identify preliminary key themes, interesting stories or anecdotes, and user sentiments.
 
-    Analyze all the provided information and create a comprehensive report that covers:
-    1.  **Key Themes:** What are the main subjects being discussed?
-    2.  **User Sentiments:** What are the prevailing opinions, feelings, and attitudes (e.g., excitement, concern, confusion)?
-    3.  **Common Questions & Problems:** What are people frequently asking about or struggling with?
-    4.  **Actionable Insights:** What are the most interesting, surprising, or useful pieces of information found?
+    Acknowledge that you have received and processed this first part. Conclude your response with the phrase "Ready for Part 2." so I know you are prepared for the next set of data. Do not generate the full report yet.
 
-    Structure your output as a clean, well-organized markdown document. Do not just list the data; synthesize it into a narrative.
-
-    <raw_reddit_data>
-    {llm_context_text}
-    </raw_reddit_data>
-
-    Generate the final, synthesized report.
+    <raw_reddit_data_part_1>
+    {part1_text}
+    </raw_reddit_data_part_1>
     """
     
-    print(f"\n-> Sending {len(llm_context_text)} characters of consolidated data to LLM for final report...")
-    response = llm.invoke(prompt)
-    final_report = response.content
-    
-    print(f"✅ Final report generated. Size: {len(final_report)} characters.")
-    return final_report
+    try:
+        print("\n-> Sending Part 1 of the data to Gemini...")
+        response1 = chat.send_message(prompt1)
+        print(f"✅ Gemini acknowledged Part 1. Response: \"{response1.text[:100]}...\"")
 
+        # --- Step 5: Second Turn - Ingest, Synthesize, and Generate Full Report ---
+        prompt2 = f"""Excellent. Now, here is the second and final part of the raw data.
+
+        <raw_reddit_data_part_2>
+        {part2_text}
+        </raw_reddit_data_part_2>
+
+        Now, using the information from BOTH Part 1 and Part 2, generate a single, final, comprehensive report. The report should be very detailed and well-structured to serve as a knowledge base for answering questions.
+
+        Structure the report with the following detailed sections:
+        1.  **Executive Summary:** A high-level overview of the entire discussion.
+        2.  **Key Themes & Sub-Topics:** A deep dive into the 3-5 main themes that emerged. For each theme, explain it in detail.
+        3.  **Prevailing Sentiments:** Analyze the overall mood. Is it positive, negative, mixed, concerned, excited? Use direct (but anonymous) sentiment examples.
+        4.  **Common Questions & Unanswered Problems:** What are people consistently asking? What problems are they trying to solve?
+        5.  **Notable Stories & Anecdotes:** Extract and retell 2-3 specific, compelling user stories or personal experiences that were shared. These are crucial for adding a human element. Quote short, impactful parts if necessary.
+        6.  **Actionable Insights & Data Points:** List any specific advice, statistics, or hard facts that were mentioned.
+
+        Your final output should be ONLY the complete markdown report. Be as detailed and comprehensive as possible.
+        """
+        
+        print("\n-> Sending Part 2 and requesting the final report...")
+        final_response = chat.send_message(prompt2)
+        final_report = final_response.text
+        
+        print(f"✅ Final deep report generated. Size: {len(final_report)} characters.")
+        return final_report
+
+    except Exception as e:
+        print(f"❌ An error occurred during Gemini report generation: {e}")
+        return f"# Report Generation Failed\n\nAn error occurred while communicating with the Gemini API: {e}"
 
 def save_report_to_file(report: str, topic: str) -> str:
     """Saves the report to a markdown file and returns the file path."""
@@ -656,6 +687,33 @@ def save_report_to_file(report: str, topic: str) -> str:
     except Exception as e:
         print(f"❌ Failed to save report: {e}")
         return ""
+def save_raw_data_to_file(consolidated_data: list[dict], topic: str) -> str:
+    """
+    Saves the raw, consolidated data to a JSON file for debugging and review.
+
+    Args:
+        consolidated_data: The list of dictionaries from `scrape_validated_posts`.
+        topic: The research topic to include in the filename.
+
+    Returns:
+        The path to the saved file.
+    """
+    # Create a unique filename to avoid overwriting
+    filename = f"raw_data_{topic.replace(' ', '_').lower()}_{int(time.time())}.json"
+    print(f"\n💾 Saving raw consolidated data to file: {filename}")
+    
+    try:
+        # Use json.dump for pretty-printing the list of dictionaries
+        with open(filename, 'w', encoding='utf-8') as f:
+            # indent=2 makes the JSON file human-readable
+            json.dump(consolidated_data, f, indent=2, ensure_ascii=False)
+            
+        print(f"✅ Raw data successfully saved to {filename}")
+        print(f"📁 File size: {os.path.getsize(filename):,} bytes")
+        return filename
+    except Exception as e:
+        print(f"❌ Failed to save raw data file: {e}")
+        return "" # Return an empty string on failure
 
 def main():
     print("--- 🚀 Starting Social Media Agent ---")
@@ -684,7 +742,7 @@ def main():
             # --- NEW WORKFLOW STARTS HERE ---
 
             # 1. Find potential subreddits (using the improved function)
-            subreddits = find_relevant_subreddits(topic, limit=5)
+            subreddits = find_relevant_subreddits(topic, limit=20)
             if not subreddits:
                 print("❌ No relevant subreddits found.")
                 return
@@ -697,6 +755,8 @@ def main():
             
             # 3. Scrape ONLY the best posts
             consolidated_data = scrape_validated_posts(top_submissions, top_posts, top_comments)
+            save_report_to_file(consolidated_data, f"raw_report_{topic}")
+
 
             # --- END OF NEW WORKFLOW ---
 
