@@ -1,0 +1,689 @@
+[
+  {
+    "type": "full_submission",
+    "title": "Working with Langchain be like",
+    "url": "https://i.redd.it/smt0gvkg35me1.png",
+    "score": 997,
+    "selftext": "",
+    "top_comments": [
+      {
+        "body": "Red arrows were deprecated yesterday.",
+        "score": 137
+      },
+      {
+        "body": "And after a month or so you think you've understood and try again without success.",
+        "score": 21
+      },
+      {
+        "body": "Why don’t they just use ai to write the docs",
+        "score": 15
+      },
+      {
+        "body": "Painfully accurate and true.",
+        "score": 7
+      },
+      {
+        "body": "I miss Stack Overflow 😞",
+        "score": 7
+      }
+    ]
+  },
+  {
+    "type": "full_submission",
+    "title": "Langchain destroyed my marriage",
+    "url": "https://www.reddit.com/r/LangChain/comments/1k6pm1g/langchain_destroyed_my_marriage/",
+    "score": 672,
+    "selftext": "\nIt all started so innocently. I just wanted to tinker with a small project. \"Try LangChain,\" the internet said. \"It lets you easily build complex AI applications, connecting various models and data.\" I figured, why not? My wife even encouraged me. \"Didn't you always want to build something with AI?\" That was the last time she gave me an encouraging smile.\n\nI chose to build from scratch—no templates, no tutorials—I wanted to chain every LLM, every vector database, every retriever myself. Because apparently, I hate myself and everyone who loves me. Hours turned into days. I hunched over Cursor like an addict, mumbling \"AgentExecutor... my precious AgentExecutor...\" My wife brought me coffee. I hissed and told her not to interrupt my sacred prompt engineering process.\n\nThat night, she asked if I wanted to watch a movie. I said, \"Sure, right after I fix this hallucination issue.\" That was three days ago. She watched the entire Lord of the Rings trilogy alone. I, meanwhile, was admiring the colorful debug outputs in my terminal, experiencing something close to enlightenment, or madness.\n\nShe tried to reconnect with me. \"Let's go for a walk,\" she said. \"Let's talk about our future.\" I told her I couldn't because my RAG system wasn't retrieving relevant results and I needed to optimize my prompt chain. She asked if I could still find my heart.\n\nThen came the endless dependency updates. I ran pip install -U langchain and boom! Everything is wrong! I spent eight hours debugging compatibility issues with the new version, checking documentation while opening issues on GitHub. She walked in, looked at me surrounded by dozens of browser tabs and terminal windows, and whispered, \"Is this... is this who you are now?\"\n\nShe left that night. Said she was going to \"find someone who doesn't treat conversation models as their best friend.\" Last week, she sent divorce papers. I was about to sign them when my AI coding assistant started vibing with me, finishing my code before I even thought it. \"Who needs human connection,\" I thought, watching Cursor autocomplete my entire legal document analyzer, \"when your AI understands you better than your wife ever did?\"",
+    "top_comments": [
+      {
+        "body": "from langchain.relationships import Marriage\n\nMarriage.reset(keep_house=True, use_emotions=False)",
+        "score": 153
+      },
+      {
+        "body": "![gif](giphy|ukGm72ZLZvYfS)",
+        "score": 39
+      },
+      {
+        "body": "Sorry langchain, but I had to do this when I saw https://www.reddit.com/r/linuxsucks/s/HsGvdKp4sC . We’re good. ;)",
+        "score": 24
+      },
+      {
+        "body": "Can I quote this for an upcoming talk? It's pure gold.",
+        "score": 12
+      },
+      {
+        "body": "import joke",
+        "score": 7
+      }
+    ]
+  },
+  {
+    "type": "full_submission",
+    "title": "Why is everyone suddenly ditching LangChain?",
+    "url": "https://www.reddit.com/r/LangChain/comments/1j8kmeu/why_is_everyone_suddenly_ditching_langchain/",
+    "score": 277,
+    "selftext": "Everyone was a fan of LangChain until a few months ago. Plenty of YT tutorials, Blogs, Reels but suddenly everyone is bashing them.   \n  \nI have now started believing that AI industry works on wave. If something is trending (Deepseek and now Manus), everyone starts loving it suddenly and if something is being bashed, everyone starts hating it like they were living with those problems all over and now they got a chance.   \n  \nWhat are your thoughts?  ",
+    "top_comments": [
+      {
+        "body": "Relying on a bloated library that makes a non-deterministic impact on the output of your code is the same as being vendor locked.",
+        "score": 115
+      },
+      {
+        "body": "1) Docs are a mess\n\n2) It abstracts far too much and the abstraction it does is very convoluted.\n\nI built a prototype of my project and did some testing with some users and went to make changes/updates and it was very frustrating. Did a complete rip out and switched to Pydantic AI. Like 100x easier: init the Agent, define your tools. That’s it.\n\nAdditionally one of the issues trying to get LLMs to behave programmatically is type safety. Pydantic AI has the added benefit of using Pydantic and being more integrated with it. People are underestimating how important type safety is. It enables you to go pure natural language->data structure.",
+        "score": 66
+      },
+      {
+        "body": "[removed]",
+        "score": 75
+      },
+      {
+        "body": "Anyone with some experience in coding with LLM APIs could tell you LangChain is unnecessarily complex with excessive abstractions that only serve to make custom implementation more difficult.\n\nIt was never good, but people adopted it anyway because they didn't know any better.",
+        "score": 40
+      },
+      {
+        "body": "Im currently involved in a startup project, building RAG agents. I've just made the decision to migrate everything from Langchain to PydanticAI after a week of implementation.\n\nLangchain is just abstractions over abstractions over abstractions. The last drop was when I was trying to get even a simple conversational RAG bot to work - I had to dig through 4 different tutorial articles on the official Langchain site, each using a different version (none are compatible with the other), only to in the end resort to LangGraph agent",
+        "score": 26
+      }
+    ]
+  },
+  {
+    "type": "full_submission",
+    "title": "If anyone from Langchain team is reading this: STOP EVERYTHING and JUST UPDATE AND ORGANISE THE DOCS!",
+    "url": "https://www.reddit.com/r/LangChain/comments/1gwh09x/if_anyone_from_langchain_team_is_reading_this/",
+    "score": 371,
+    "selftext": "I know very many people who just give up on this framework. It's supposed to be easy for people with average or low coding experience. You are building the product for experienced devs who could even build agents without using langgraph or langchain.\n\nIt should be so easy, you could pass well organised docs to Cursor for example and you could create agent workflows with simple logic and commands. But the docs are so confusing, 0 organisation and you need to do so much searching and finding your own way to use the framework.",
+    "top_comments": [
+      {
+        "body": "\"the code is the documentation\" /s",
+        "score": 59
+      },
+      {
+        "body": "They've been REPEATEDLY told how bad their docs are.  They pay lip service to improving them but never do.",
+        "score": 44
+      },
+      {
+        "body": "we are reading! we do spend a lot of time on this (revamped conceptual docs last week, working on tutorials this week). clearly we are still falling short.\n\nwhat would be really helpful is concrete examples. if youre able to share specific issues you ran into we can absolutely work on those. theres a lot in the langchain documentation, so this would help us narrow in on where to spend time",
+        "score": 87
+      },
+      {
+        "body": "We got you mate, we will keep our documentation simple and up-to-date in our next version of Langchain v23962.4647.",
+        "score": 12
+      },
+      {
+        "body": "100% agreed!\n\nAlso can we do something about the mess of a jungle that LCEL has become? There are 100 different ways to do the same task none of them efficient or Pythonic! For god's sake, we don't need a half-assed wrapper for every basic package out there. What we need is a unified and comprehensive style (a cleaned up version of LCEL) that is easy to follow and conforms to the norms of python language (and conventions of other prominent python built-ins).",
+        "score": 10
+      }
+    ]
+  },
+  {
+    "type": "full_submission",
+    "title": "That's not an abstraction, that's just a layer of indirection",
+    "url": "https://fhur.me/posts/2024/thats-not-an-abstraction",
+    "score": 474,
+    "selftext": "",
+    "top_comments": [
+      {
+        "body": "There are abstraction whose goal are not to hide stuff, but to uniformise stuff. It’s when you add an adapter to be able to use some legacy module as-if it had the same interface as the rest of your code. Such abstraction are indeed 100% a level of inderection, but the cost is not in the abstraction, it’s the existance of a legacy module that doesn’t follow the architecture and convention of the rest of your code. I totally agree that adapter are a nightmare to look throught, but they are the messenger, not the root cause of the issue. The issue being not enough time allocated to clean-up and refactoring.",
+        "score": 288
+      },
+      {
+        "body": "\"duplication is far cheaper than the wrong abstraction\" -- Sandi Metz\n\nAnd I don't think she actually means in terms of compute resources, but in terms of developer attention and time. \n\nhttps://sandimetz.com/blog/2016/1/20/the-wrong-abstraction",
+        "score": 25
+      },
+      {
+        "body": "Code with lots of abstractions is sometimes difficult to understand, but code with few abstractions is almost impossible to change.",
+        "score": 334
+      },
+      {
+        "body": "Feels a bit like AI written, lacks details, and real code examples. Just a vague idea expended with too many words.",
+        "score": 111
+      },
+      {
+        "body": "Premature abstraction is the root of all evil in web/app dev. A pathological effort to be DRY needlessly couples code that might start out \"the same\" and gradually the need to diverge causes that abstraction to crumble under its own complexity. Mid level mistake.",
+        "score": 13
+      }
+    ]
+  },
+  {
+    "type": "full_submission",
+    "title": "Hot take: Just use Langchain",
+    "url": "https://i.redd.it/v0t3q1xpu0ae1.jpeg",
+    "score": 272,
+    "selftext": "",
+    "top_comments": [
+      {
+        "body": "LangChain is such a mess. It's too big of a risk to use in production IMHO.",
+        "score": 152
+      },
+      {
+        "body": "When you first start with langchain it is excellent, then you get frustrated and start writing all your own work arounds and feel like you should build it from scratch, then you miss a lot of the convenience of things like stateful graph orchestration, then you rewrite and customize on top of those things to make langgraph better.  That's how I'd describe moving from the left tail to the right tail of that distribution.",
+        "score": 18
+      },
+      {
+        "body": "I Just re implemented most of the rag flow from scratch and:\n1) learned a lot\n2) took a week or so\n3) feel lot safer to use something you understand in production \n\nDon't bother entering these useless wrappers, go for litellm and learn do it by yourself, increasers confidence tenfolds",
+        "score": 13
+      },
+      {
+        "body": "Commands being randomly deprecated. Pushing you towards LangGraph, which looks like it’s still in development while in prod. No enterprise apps should be on this.",
+        "score": 41
+      },
+      {
+        "body": "Replit Agent built on top this, I don’t understand you guys excuse at this point.",
+        "score": 9
+      }
+    ]
+  },
+  {
+    "type": "full_submission",
+    "title": "Devs gaining little (if anything) from AI coding assistants",
+    "url": "https://www.cio.com/article/3540579/devs-gaining-little-if-anything-from-ai-coding-assistants.html",
+    "score": 357,
+    "selftext": "",
+    "top_comments": [
+      {
+        "body": "I think AI can be very useful when you're using it like Stack Overflow plus plus; if you ask it *how do I connect to a datasource in Spring Boot* or *how to I create a channel in GoLang* it can usually spit out a decent answer. You still need to verify and test, but it's usually correct, or close to correct.\n\nBut it falls apart when you start asking it more open-ended questions. If you don't already know *why* you need a datasource or a channel, you can't ask the AI the right questions to make it give you the right answer.\n\nIf you treat AI like documentation, you're fine. If you treat it like an architect, you're out of luck.",
+        "score": 375
+      },
+      {
+        "body": "It's useful for boilerplate or starting a project, but it can't handle the complexity of modifying a large code base",
+        "score": 62
+      },
+      {
+        "body": "Here are some interesting points:\n1. Code analysis firm sees no major benefits from AI dev tool when measuring key programming metrics.\n2. ...found no significant improvements for developers using Copilot.\n\nHoffman acknowledges there may be more ways to measure developer productivity than PR cycle time and PR throughput, but Uplevel sees those metrics as a solid measure of developer output.\n\n>    “It becomes increasingly more challenging to understand and debug the AI-generated code, and troubleshooting becomes so resource-intensive that it is easier to rewrite the code from scratch than fix it.”\n    —Ivan Gekht, CEO, Gehtsoft\n\nFinal analysis with positive caveat:\n>“Expectations around coding assistants should be tempered because they won’t write all the code or even all the correct code on the first attempt,” he says. “It is an iterative process that, when used correctly, enables a developer to increase the speed of their coding by two or three times.”",
+        "score": 25
+      },
+      {
+        "body": "It's another tool in our toolbox. It is not a replacement for writing code.  Though I admit I find it useful for speed creating unit tests.",
+        "score": 10
+      },
+      {
+        "body": "I've been programming for a long time now but it's a tool and a job for me not a lifestyle (my background is actually in earth science) so there are a number of things i've never learned to do and can't be bothered so for me it's a useful tool to say 'hey write me a bit of code in <language> that does X' and it gives me something and I look it over and bam. Task done. I don't have to go out and waste a lot of time getting good at a language or something I don't care about learning. Sometimes i ask it to explain something given a code example and it usually does a credible job but then it can also get stuck and give you something basically with zero value.",
+        "score": 6
+      }
+    ]
+  },
+  {
+    "type": "full_submission",
+    "title": "Why are developers moving away from LangChain?",
+    "url": "https://www.reddit.com/r/LangChain/comments/1j1gb88/why_are_developers_moving_away_from_langchain/",
+    "score": 179,
+    "selftext": "I've noticed that LangChain is starting to fall out of favor with developers, and I personally have begun to dislike the experience as well. The framework feels bloated, with too many dependencies and unnecessary complexity. A lot of components have been moved into separate packages, making it harder to manage. Overall, I feel like it’s becoming over-engineered.\n\nWhat are your thoughts on this? Why do you think developers are moving away from LangChain? Also, what lightweight and developer-friendly alternatives do you use?",
+    "top_comments": [
+      {
+        "body": "I wanted to like langchain and have used it for a few projects. But i will probably never use it again because It’s unstable, the interface constantly changes, the documentation is regularly out of date, and the abstractions are overly complicated.",
+        "score": 77
+      },
+      {
+        "body": "https://preview.redd.it/vyy5nfczs6me1.png?width=1200&format=png&auto=webp&s=96c0beba2440189c3fb3e2ce598eefe0d59d19b1",
+        "score": 104
+      },
+      {
+        "body": "Nobody’s mentioning an alternative yet. I wanna know smarts peoples of Reddit",
+        "score": 34
+      },
+      {
+        "body": "lol I thought developers been falling out with LangChain the whole time.",
+        "score": 7
+      },
+      {
+        "body": "I’ve been using Pydantic AI lately. It’s a whole lot less complicated and bloated, it comes with no default agent’s like Langchain, but the structure is fairly straightforward and extremely flexible IMO.",
+        "score": 12
+      }
+    ]
+  },
+  {
+    "type": "full_submission",
+    "title": "Why are people hating LangChain so much, organisations are also not preferring projects built on top of LangChain",
+    "url": "https://www.reddit.com/r/LangChain/comments/1gmfyi2/why_are_people_hating_langchain_so_much/",
+    "score": 131,
+    "selftext": " gave a interview a few days back, the interviewer was pissed off cuz I used LangChain also every tech event that I go to everybody literally everybody hate langchain every \"seeming\" to be good developer.\n\nFor me I've found out langchain is great to get shit done, still people hate  \nShould I continue with langchain or custom build, import  things like these so called other \" Experienced Developers\" do",
+    "top_comments": [
+      {
+        "body": "Unnecessary complexity due to over abstraction which in turn impacts maintainability, customization and productivity.\n\nI've used it in my Open API for NotebookLM project but it's slowly becoming a pain: [https://github.com/souzatharsis/podcastfy](https://github.com/souzatharsis/podcastfy)",
+        "score": 105
+      },
+      {
+        "body": "The original versions of LangChain were released at an early stage of LLMs when the APIs were new. They got some of the abstractions wrong and it was unnecessarily complex.\n\nLangGraph is much, much better and they are building out tools to support it. Plus the documentation has taken a step up.\n\nThere are other frameworks out there that work well on some use cases, but for me it is still the best option out there.",
+        "score": 34
+      },
+      {
+        "body": "1. they make things too complicated \n2. to much abstraction\n3. Don't updating and maintaining their docs at the time the change something",
+        "score": 30
+      },
+      {
+        "body": "i needed to make a chatbot + some agents with tool function calling\n\nstarted from zero with langchain, never did something with it and jesus it was hard trying to learn everything based on docs. a lot of things are not up to date, they over abstract and over complicate a lot.\n\nswitched to llama index, it was easier but now i wonder if should just use the raw llm api (which is anthropic).",
+        "score": 9
+      },
+      {
+        "body": "From my perspective there’s so much overhead to learn just to build a simple project and error messages are often highly uninformative and it’s incredibly annoying when the error message says \n\n“Input she be a string or list of strings”\n\nthen I check the type and it is indeed a list of strings. So I try concatenation them all and passing a single string, and it won’t error but it doesn’t do what you would expect.\n\nAnd after enough of this frustration I just end up using the underlying SDKs and libraries directly because it’s difficult to debug when the error message doesn’t tell me what’s wrong, and I don’t have time to dive deep into library code.",
+        "score": 5
+      }
+    ]
+  },
+  {
+    "type": "full_submission",
+    "title": "why is langchain so difficult to use?",
+    "url": "https://www.reddit.com/r/LangChain/comments/1li88s3/why_is_langchain_so_difficult_to_use/",
+    "score": 64,
+    "selftext": "i spent the weekend trying to integrate langchain with my POC and it was frustrating to say the least. i'm here partly to vent, but also to get feedback in case i went down the wrong path or did something completely wrong.\n\nbasically, i am trying to build a simple RAG using python and langchain: from a user chat, it queries mongodb by translating the natural language to mql, fetches the data from mongodb and return a natural response via llm.\n\nsounds pretty straight-forward right?\n\nBUT, when trying to use with langchain to create a simple prototype, my experience was a complete disaster:\n\n* the documentation is very confusing and often incomplete\n* i cannot find any simple guide to help walkthrough doing something like this\n* even if there was a guide, they all seem to be out of date\n* i have yet to find a single LLM that outputs correct langchain code that actually works\n* instead, the API reference provides very few examples to follow. it might be useful for those who already know what's available or the names of the components, but not helpful at all for someone trying to figure out what to use.\n* i started using MongoDBDatabaseToolkit which wraps all the relevant agent tools for mongodb. but it isnt clear how it would behave. so after debugging the output and code, it turns out it would keep retrying failed queries (and consume tokens) many many times before failing. only when i started printing out events returned that i figured this out - also not explained. i'm also not sure how to set the max retries or if that is even possible.\n* i appreciate its many layers of abstractions but with that comes a much higher level of complexity - is it really necessary?\n* there simply isnt any easy step by step guide (that actually works) that shows how to use, and how to incrementally add more advanced features to the code. at the current point, you literally have to know a lot to even start using!\n* my experience previously was that the code base updates quite frequently, often with breaking changes. which was why i stopped using it until now\n\nmore specifically, take MongoDBDatabaseToolkit API reference as an example:\n\n[https://langchain-mongodb.readthedocs.io/en/latest/langchain\\_mongodb/agent\\_toolkit/langchain\\_mongodb.agent\\_toolkit.toolkit.MongoDBDatabaseToolkit.html#langchain\\_mongodb.agent\\_toolkit.toolkit.MongoDBDatabaseToolkit](https://langchain-mongodb.readthedocs.io/en/latest/langchain_mongodb/agent_toolkit/langchain_mongodb.agent_toolkit.toolkit.MongoDBDatabaseToolkit.html#langchain_mongodb.agent_toolkit.toolkit.MongoDBDatabaseToolkit)\n\n* explanation on what it does is very sparse: ie \"MongoDBDatabaseToolkit for interacting with MongoDB databases.\"\n* retries on failures not explained\n* doesnt explain that events returned provide the details of the query, results or failures\n\nsurely it cannot be this difficult to get a simple working POC with langchain?\n\nis it just me and am i just not looking up the right reference materials?\n\ni managed to get the agent workflow working with langchain and langgraph, but it was just so unnecessarily complicated - that i ripped it out and went back to basics. that turns out to be a godsend since the code is now easier to understand, amend and debug.\n\nappreciate input from anyone with experience with langchain for thoughts on this.\n\n",
+    "top_comments": [
+      {
+        "body": "Langchain was the first attempt to build a production-ready system around LLM use. I would argue that there were many wrong design decisions taken still, and the documentation generally has been poor. Today, I would not recommend it to most people.",
+        "score": 26
+      },
+      {
+        "body": "these two helped me a lot:  \n[https://www.youtube.com/watch?v=WPgG\\_PlOsYs&list=PLNIQLFWpQMRXmns-7UarmPIR6DN7bgEzZ](https://www.youtube.com/watch?v=WPgG_PlOsYs&list=PLNIQLFWpQMRXmns-7UarmPIR6DN7bgEzZ)\n\n[https://github.com/NirDiamant/agents-towards-production](https://github.com/NirDiamant/agents-towards-production)\n\nI am learning by following the youtube tutorials and looking at exampples at this repo... Has been working so far. I find that cursor also helps, but its not as good as using it for more \"classical\" things - it tends to hallucinate more, so I use it mostrly for debugging...",
+        "score": 12
+      },
+      {
+        "body": "I feel some of these comments are strangely against langchain with very little substance just because it’s not chewed down into the simplest api possible, seems like people are unwilling to think, read and research now more than ever, everything has to be “easy” to use or it’s just not worth it. Don’t discard something because it’s hard to understand for YOU, if you want a toy level set of abstraction you can plug and play there’s libs for that, if a low level set of primitives are too hard to use and understand that’s just a skill issue not the framework. Just my two cents, if you didn’t learn it in one afternoon that’s ok, sometimes hard things take time.",
+        "score": 17
+      },
+      {
+        "body": "I’ve had some of the same criticisms of LangChain. \n\nIt was because I lacked understanding. I recently got the new “Generative AI with LangChain” book and it’s opened my eyes a bit. I better understand why and what it’s doing.\n\nI’ve also done many ai freelance projects since I first checked it out and I am seeing a lot of ways I could have simplified my coding and revision process if I were using LangChain. A lot…",
+        "score": 5
+      },
+      {
+        "body": "Langgraph is the way to go",
+        "score": 9
+      }
+    ]
+  },
+  {
+    "type": "individual_post",
+    "title": "Built a Langchain RAG + SQL Agent... Just to Get Obsolete by DeepSeek R1. Are Frameworks Doomed To Failure?",
+    "selftext": "So, here’s the rollercoaster 🎢:  \n\nA month ago, I spent *way* too long hacking together a Langchain agent to query a dense PDF manual (think walls of text + cursed tables). My setup? Classic RAG + SQL, sprinkled with domain-specific logic and prompt engineering to route queries. Not gonna lie—stripping that PDF into readable chunks felt like defusing a bomb 💣. But hey, it worked! ...Sort of. \nGPT-4 alone failed delivering answers on the raw PDF, so I assumed *human logic* was the missing ingredient.  It was also a way for me to learn some basic elements of the framework so why not.\n\n**Then DeepSeek R1 happened.**  \n\nOn a whim, I threw the **same raw PDF** at DeepSeek’s API—*zero ingestion, no pipelines, no code*—and it… just answered all the testing questions. Correctly. Flawlessly. 🤯  \n\nSuddenly, my lovingly crafted Langchain pipeline feels like from another age even if it was only 1 month ago.\n\n**The existential question:** As LLMs get scarily good at \"understanding\" unstructured data (tables! PDFs! chaos!), **do frameworks like Langchain risk becoming legacy glue?** Are we heading toward a world where most \"pipelines\" are just… a well-crafted API call?  \n\nOr am I missing the bigger picture—is there still a niche for stitching logic between models, even as they evolve?  \n\n*Anyone else feel this whiplash?* 🚀💥\n\n…And if you’re wondering I’m not from China !",
+    "score": 135
+  },
+  {
+    "type": "individual_post",
+    "title": "Introducing LangManus. A community-driven effort to replicate Manus using LangChain + LangGraph.",
+    "selftext": "This is an academically driven open-source project, developed by a group of former colleagues in their spare time.\n\nYou can see the [Demo Video](https://www.youtube.com/watch?v=sZCHqrQBUGk) on YouTube.\n\nArchitecture: LangManus implements a hierarchical multi-agent system where a supervisor coordinates specialized agents to accomplish complex tasks:\n\n[LangManus Architecture](https://preview.redd.it/i8w8ghzq30qe1.png?width=2258&format=png&auto=webp&s=39379114e21e53ba284dc9a350cee55a5ef1e2d5)\n\nProjects used to build this:\n\n* [Qwen](https://github.com/QwenLM/Qwen) for their opensource LLMs\n* [Tavily](https://tavily.com/) for search capabilities\n* [Jina](https://jina.ai/) for crawl search technology\n* [Browser-use](https://pypi.org/project/browser-use/) for control browser\n\nYou can check more about it on [GitHub](https://github.com/langmanus/langmanus).",
+    "score": 118
+  },
+  {
+    "type": "individual_post",
+    "title": "Langchain Jobs",
+    "selftext": "I was checking job positions that require langchain or langgraph as a requirement. For my surprise there is nothing on LinkedIn worldwide.\n\nOnly 19 positions and some of them are for the langchain corp.\n\nIs the langchain in use in production in real projects?\n\nWhy aren’t many job positions requesting it as a requirement?",
+    "score": 92
+  },
+  {
+    "type": "individual_post",
+    "title": "Going from 25% success rate with Langchain's Graph RAG to 99.4% using BAML",
+    "selftext": "Disclaimer: I work on BAML - a prompting config language to get structured outputs ( [https://github.com/BoundaryML/baml](https://github.com/BoundaryML/baml) ) \n\nOne of our BAML users decided to test our framework against Langchain's GraphDocument solution to do RAG with graphs and got some crazy results I had to share.\n\nhttps://preview.redd.it/bfw5zak8ba5e1.png?width=1330&format=png&auto=webp&s=233f4ea00e7b784aba684fc416a9717bb0a69364\n\nHere is their blog post: [https://medium.com/@khaledarindam/implementing-graphrag-with-smaller-open-source-llms-a-practical-guide-501a62864c15](https://medium.com/@khaledarindam/implementing-graphrag-with-smaller-open-source-llms-a-practical-guide-501a62864c15) \n\nHere is the langchain implementation: [https://github.com/arindamkhaled/OpenGraphRAG/blob/main/opengraphrag/graph\\_rag\\_small\\_llms\\_wo\\_baml.ipynb](https://github.com/arindamkhaled/OpenGraphRAG/blob/main/opengraphrag/graph_rag_small_llms_wo_baml.ipynb) \n\nWe've had some similar feedback that examples that don't work with Langchain tend to work with BAML, since it uses a simplified schema format to do structured outputs with LLMs ( [https://www.boundaryml.com/blog/sota-function-calling?q=0](https://www.boundaryml.com/blog/sota-function-calling?q=0) ). Happy to answer any questions. ",
+    "score": 92
+  },
+  {
+    "type": "individual_post",
+    "title": "moving away from langchain, but where ??",
+    "selftext": "I've heard a lot of people were migrating from langchain.\n\nim curious which which tooling are you guys using to create your AI Agents and orchestrate tooling selection among other things. im a data engineer and exploring creating AI agents coupled with scripts which the ai agent can execute based on input.\n\n",
+    "score": 96
+  },
+  {
+    "type": "individual_post",
+    "title": "Best LangChain alternatives",
+    "selftext": "Hey everyone, LangChain seemed like a solid choice when I first started using it. It does a good job at quick prototyping and has some useful tools, but over time, I ran into a few frustrating issues. Debugging gets messy with all the abstractions, performance doesn’t always hold up in production, and the documentation often leaves more questions than answers.\n\nAnd judging by the discussions here, I’m not the only one. So, I’ve been digging into alternatives to LangChain - not saying I’ve tried them all yet, but they seem promising, and plenty of people are making the switch. Here’s what I’ve found so far.\n\n**Best LangChain alternatives for 2025**\n\n**LlamaIndex**\n\nLlamaIndex is an open-source framework for connecting LLMs to external data via indexing and retrieval. Great for RAG without LangChain performance issues or unnecessary complexity.\n\n* **Debugging.** LangChain’s abstractions make tracing issues painful. LlamaIndex keeps things direct (less magic, more control) though complex retrieval setups still require effort.\n* **Performance.** Uses vector indexing for faster retrieval, which should help avoid common LangChain performance bottlenecks. Speed still depends on your backend setup, though.\n* **Production use.** Lighter than LangChain, but not an out-of-the-box production framework. You’ll still handle orchestration, storage, and tuning yourself.\n\n**Haystack**\n\nHaystack is an open-source NLP framework for search and Q&A pipelines, with modular components for retrieval and generation. It offers a structured alternative to LangChain without the extra abstraction.\n\n* **Debugging.** Haystack’s retriever-reader architecture keeps things explicit, making it easier to trace where things break.\n* **Performance.** Built to scale with Elasticsearch, FAISS, and other vector stores. Retrieval speed and efficiency depend on setup, but it avoids the overhead that can come with LangChain’s abstractions.\n* **Production use.** Designed for enterprise search, support bots, and document retrieval. It lets you swap out components without rearchitecting the entire pipeline. A solid LangChain alternative for production when you need control without the baggage.\n\n**nexos.ai**\n\nThe last one isn’t available yet, but based on what’s online, it looks promising for us looking for LangChain alternatives. nexos.ai is an LLM orchestration platform expected to launch in Q1 of 2025. \n\n* **Debugging.** nexos.ai provides dashboards to monitor each LLM’s behavior, which could reduce guesswork when troubleshooting.\n* **Performance.** Its dynamic model routing selects the best LLM for each task, potentially improving speed and efficiency - something that LangChain performance issues often struggle with in production.\n* **Production use.** Designed with security, scaling, and cost control in mind. Its built-in cost monitoring could help address LangChain price concerns, especially for teams managing multiple LLMs.\n\n**My conclusion is that**\n\n* **LlamaIndex** \\- can be a practical LangChain alternatives Python option for RAG, but not a full replacement. If you need agents or complex workflows, you’re on your own.\n* **Haystack** \\- more opinionated than raw Python, lighter than LangChain, and focused on practical retrieval workflows.\n* **nexos.ai** \\-  can’t test it yet, but if it delivers on its promises, it might avoid LangChain’s growing pains and offer a more streamlined alternative.\n\nI know there are plenty of other options offering similar solutions, like Flowise, CrewAI, AutoGen, and more, depending on what you're building. But these are the ones that stood out to me the most. If you're using something else or want insights on other providers, let’s discuss in the comments.\n\nHave you tried any of these in production? Would be curious to hear your takes or if you’ve got other ones to suggest.",
+    "score": 49
+  },
+  {
+    "type": "individual_post",
+    "title": "I built an MCP that finally makes LangChain agents shine with SQL",
+    "selftext": "Hey r/LangChain 👋\n\nI'm a huge fan of using LangChain for queries & analytics, but my workflow has been quite painful. I feel like I the SQL toolkit never works as intended, and I spend half my day just copy-pasting schemas and table info into the context. I got so fed up with this, I decided to build [ToolFront](https://github.com/kruskal-labs/toolfront). It's a free, open-source MCP that finally gives AI agents a smart, safe way to **understand all your databases and query them**.\n\n# So, what does it do?\n\nToolFront equips Claude with a set of **read-only database tools**:\n\n* `discover`: See all your connected databases.\n* `search_tables`: Find tables by name or description.\n* `inspect`: Get the exact schema for any table – no more guessing!\n* `sample`: Grab a few rows to quickly see the data.\n* `query`: Run read-only SQL queries directly.\n* `search_queries` **(The Best Part)**: Finds the most relevant historical queries written by you or your team to answer new questions. Your AI can actually learn from your team's past SQL!\n\n# Connects to what you're already using\n\nToolFront supports the databases you're probably already working with:\n\n* **Snowflake**, **BigQuery**, **Databricks**\n* **PostgreSQL**, **MySQL**, **SQL Server**, **SQLite**\n* **DuckDB** (Yup, analyze local CSV, Parquet, JSON, XLSX files directly!)\n\n# Why you'll love it\n\n* **Faster EDA**: Explore new datasets without constantly jumping to docs.\n* **Easier Agent Development**: Build data-aware agents that can explore and understand your actual database structure.\n* **Smarter Ad-Hoc Analysis**: Use AI to understand data help without context-switching.\n\nIf you work with databases, I genuinely think ToolFront can make your life a lot easier.\n\nI'd love your feedback, especially on what database features are most crucial for your daily work.\n\n**GitHub Repo**: [https://github.com/kruskal-labs/toolfront](https://github.com/kruskal-labs/toolfront)\n\nA ⭐ on GitHub really helps with visibility!",
+    "score": 70
+  },
+  {
+    "type": "individual_post",
+    "title": "Clear example of how langchain docs suck",
+    "selftext": "I had to use langchain.js for a project. i just searched langchain js prompt\n\n[https://js.langchain.com/v0.1/docs/modules/model\\_io/prompts/](https://js.langchain.com/v0.1/docs/modules/model_io/prompts/)\n\nthis is the first link that came up. Opened it, it said this is doc for old version, and it gave a link to latest version. When i click it gives 404 page...  \n[https://js.langchain.com/docs/modules/model\\_io/prompts/](https://js.langchain.com/docs/modules/model_io/prompts/)",
+    "score": 56
+  },
+  {
+    "type": "individual_post",
+    "title": "We all should appreciate for langchain changing its library all the time",
+    "selftext": "Otherwise all you developers would be replaced by Sonnet 3.7 Langchain keeps things ahead of LLM knowledge-cut every time :)",
+    "score": 65
+  },
+  {
+    "type": "individual_post",
+    "title": "LangChain in a Nutshell: Making LLMs Truly Useful",
+    "selftext": "Over the past four months, I’ve been learning about Langchain while building the core features for my product The Work Docs .It’s been a lot of fun learning and building at the same time, and I wanted to share some of that knowledge through this post.\n\nThis post will cover some of the basic concepts about Langchain. We will answer some questions like:\n\n* What is Langchain?\n* Why Langchain?\n* What can you build with Langchain?\n* What are Langchain's core components?\n* How does Langchain work?\n\nLet's go  \n\\---\n\n# What is Langchain ?\n\nLangChain is an open-source framework designed to simplify the development of applications powered by Large Language Models (LLMs). It provides modular, reusable components that make it easy for developers to connect LLMs with data sources, tools, and memory, enabling more powerful, flexible, and context-aware applications.\n\n# Why LangChain?\n\nWhile LLMs like GPT are powerful, they come with some key limitations:\n\n* **Outdated knowledge**: LLMs are trained on static datasets and lack access to real-time information.\n* **No action-taking ability**: By default, LLMs can't perform real-world actions like searches, calculations, or API calls.\n* **Lack of context**: Without memory or context retention, they can easily \"forget\" previous parts of a conversation.\n* **Hallucination & accuracy issues**: Sometimes, LLMs confidently provide incorrect or unverifiable answers.\n\nThat’s where LangChain comes in. It integrates several key techniques to enhance LLM capabilities:\n\n* **Retrieval-Augmented Generation (RAG)**: Fetches relevant documents to give the LLM up-to-date and factual context.\n* **Chains**: Connect multiple steps and tools together to form a logical pipeline of reasoning or tasks.\n* **Prompt engineering**: Helps guide LLM behavior by structuring prompts in a smarter way.\n* **Memory**: Stores conversation history or contextual information across interactions.\n\n# What Can You Build with LangChain?\n\nLangChain unlocks many real-world use cases that go far beyond simple Q&A:\n\n* **Chatbots & Virtual Assistants**: Build intelligent assistants that can help with scheduling, brainstorming, or customer support.\n* **Search-enhanced Applications**: Integrate search engines or internal databases to provide more accurate and relevant answers.\n* **Generative Tools**: From code generation to marketing copywriting, LangChain helps build tools that generate outputs based on your domain-specific needs.\n* And so much more.\n\n# What are Langchain's core components?\n\nLangChain offers a rich set of tools that elevate LLM apps from simple API calls to complex, multi-step workflows:\n\n* **Chains**: Core building blocks that allow you to link multiple components (e.g., LLMs, retrievers, parsers) into a coherent workflow.\n* **Agents**: These enable dynamic, decision-making behavior where the LLM chooses which tools to use based on user input.\n* **Memory**: Stores information between interactions to maintain context, enabling more natural conversations and accurate results.\n* **Tools**: Extend LLM functionality with APIs or services — such as web search, database queries, image generation, or calculations.\n\n# How Does LangChain Work?\n\nLangChain is all about **composability**. You can plug together various modules like:\n\n* Document loaders\n* Embedding generators\n* Vector stores for retrieval\n* LLM querying pipelines\n* Output parsers\n* Context memory\n\nThese can be combined into **chains** that define how data flows through your application. You can also define **agents** that act autonomously, using tools and memory to complete tasks.\n\nConclusion, LangChain helps LLMs do more — with better context, smarter logic, and real-world actions. It’s one of the most exciting ways to move from \"playing with prompts\" to building real, production-grade AI-powered applications.\n\nIf you want to know more about Langchain, ai and software engineer.  \nLet's connect on linkedin: [Link](https://www.linkedin.com/in/viethadev)\n\nI will happy to learn from you. Happy coding everyone",
+    "score": 26
+  },
+  {
+    "type": "individual_post",
+    "title": "[OC] Build a McKinsey-Style Strategy Agent with LangChain (tutorial + Repo)",
+    "selftext": "Hey everyone,\n\nBack in college I was dead set on joining management consulting—I loved problem-solving frameworks. Then I took a comp-sci class taught by a really good professor and I switched majors after understanding that our laptops are going to be so powerful all consultants would do is story tell what computers output...\n\nFast forward to today: I’ve merged those passions into code.   \nMeet my LangChain agent project that drafts *McKinsey-grade strategy briefs.*\n\nIt is not fully done, just the beginning. \n\n**Fully open-sourced**, of course.\n\n\n\n🔗 Code & README → [https://github.com/oba2311/analyst\\_agent](https://github.com/oba2311/analyst_agent)\n\n▶️ Full tutorial on YouTube → [https://youtu.be/HhEL9NZL2Y4](https://youtu.be/HhEL9NZL2Y4)\n\n\n\n**What’s inside:**\n\n• Multi-step chain architecture (tools, memory, retries)  \n\n• Prompt templates tailored for consulting workflows.\n\n• CI/CD setup for seamless deployment  \n\n\n\n**❓ I’d love your feedback:**  \n\n  – How would you refine the chain logic?  \n\n  – Any prompt-engineering tweaks you’d recommend?  \n\n  – Thoughts on memory/cache strategies for scale?  \n\n\n\nCheers!\n\nPS - it is not lost on me that yes, you could get a similar output from just running o3 Deep Research, but running DR feels too abstract without any control on the output. I want to know what are the tools, where it gets stuck. I want it to make sense.\n\n[A good change is coming](https://preview.redd.it/fs6t3fp64q0f1.png?width=898&format=png&auto=webp&s=681a904744430655e6e78739bfc092ad2288074c)\n\n",
+    "score": 56
+  },
+  {
+    "type": "individual_post",
+    "title": "100% Local Agentic RAG without using any API key- Langchain and Agno",
+    "selftext": "Learn how to build a Retrieval-Augmented Generation (RAG) system to chat with your data using Langchain and Agno (formerly known as Phidata) completely locally, without relying on OpenAI or Gemini API keys.\n\nIn this step-by-step guide, you'll discover how to:\n\n\\- Set up a local RAG pipeline i.e., Chat with Website for enhanced data privacy and control.  \n\\- Utilize Langchain and Agno to orchestrate your Agentic RAG.  \n\\- Implement Qdrant for vector storage and retrieval.  \n\\- Generate embeddings locally with FastEmbed (by Qdrant) for lightweight-fast performance.  \n\\- Run Large Language Models (LLMs) locally using Ollama. \\[might be slow based on device\\]\n\nVideo: [https://www.youtube.com/watch?v=qOD\\_BPjMiwM](https://www.youtube.com/watch?v=qOD_BPjMiwM)",
+    "score": 47
+  },
+  {
+    "type": "individual_post",
+    "title": "LangChain vs. CrewAI vs. Others: Which Framework is Best for Building LLM Projects?",
+    "selftext": "\nI’m currently working on an LLM-powered task automation project (integrating APIs, managing context, and task chaining), and I’m stuck between LangChain, CrewAI, LlamaIndex, openai swarm and other frameworks. Maybe I am overthinking still need this community help\n\n\nThought which are stuck in my mind\n\n1. How easy is it to implementcomplex workflows and API integration?\n2. How much production ready are these and how much can they scale\n3. How data like rags files, context etc scales\n4. How do they compare in performance or ease of use?\n5. Any other alternative I can consider \n",
+    "score": 46
+  },
+  {
+    "type": "individual_post",
+    "title": "Excited to Share This Upcoming LangChain Book! 🚀",
+    "selftext": "Hey everyone,\n\nI’ve been closely involved in the development of this book, and along the way, I’ve gained a ton of insights—many of them thanks to this incredible community. The discussions here, from troubleshooting pain points to showcasing real-world projects, have been invaluable. Seriously, huge thanks to everyone who shares their experiences!\n\nI truly believe this book can be a solid guide for anyone looking to build cool and practical applications with LangChain. Whether you’re just getting started or pushing the limits of what’s possible, we’ve worked hard to make it as useful as possible.\n\nTo give back to this awesome community, I’m planning to run a book giveaway around the release in April 2025 (Book is in pre-order, link in comments) and even set up an AMA with the authors. Stay tuned!\n\nWould love to hear what topics or challenges you’d like covered in an AMA—drop your thoughts in the comments! 🚀\n\nGentle note to Mods: Please talk in DMs if you need anymore information. Hopefully not breaking any rules 🤞🏻",
+    "score": 43
+  },
+  {
+    "type": "individual_post",
+    "title": "\"Why\" isn't Langchain/Langgraph  production-ready?",
+    "selftext": "Please help me understand. I've come across many comments stating that \"Langchain isn't production-ready,\" but none explain why. For my use case - developing serverless AI call agents with customizable features (like calendar booking and adding another human to calls mid-conversation) - would it be okay to proceed? I'm using Langraph, but if this approach (serverless + Langgraph ) will cause problems, how should I proceed? Should I build from scratch? If so, where should I start learning that?\n\nThanks for reading! Any answers would be greatly appreciated.\"",
+    "score": 43
+  },
+  {
+    "type": "individual_post",
+    "title": "How do companies use LangChain in production? Looking for advice",
+    "selftext": "Hey everyone! I'm exploring LangChain for our vertical AI startup and would love to hear from those who've deployed it in prod.\n\nFor those using running AI workloads in production. How do you handle these problems:\n  - LLM Access & API Gateway - do you use API gateways (like portkey or litellm) or does LangChain cover your needs?\n  - Workflow Orchestration - LangGraph? Is it enough? What about Human in the loop? Once per day scheduled? Delay workflow execution for a week?\n  - Observability - what do you use to monitor AI workloads? e.g. chat traces, agent errors, debug failed executions? \n  - Cost Tracking + Metering/Billing - do you track costs? I have a requirement that we have to implement a pay-as-you-go credit system - that requires precise cost tracking per agent call. Is there a way to track LLM request costs with LangChain across providers? \n  - Agent Memory / Chat History / Persistence - I saw there is a lot of built-in persistence and memory functionality. Can you point out what setup you use? Are you happy with it?\n  - RAG (Retrieval Augmented Generation) - same as above\n  - Integrations (Tools, MCPs) - same as above\n\nWhat tools, frameworks, or services have you found effective alongside LangChain? Any recommendations for reducing maintenance overhead while still supporting rapid feature development?\n\nWould love to hear real-world experiences before we commit to this architecture for our product.",
+    "score": 40
+  },
+  {
+    "type": "individual_post",
+    "title": "In praise of LangChain",
+    "selftext": "LangChain gets its fair share of criticism. \n\nHere’s my perspective, as a seasoned SWE new to AI Eng.\n\nI started in AI Engineering like many folks, building a Question-Answer RAG.\n\nAs our RAG project matured, functional expectations sky-rocketed. \n\nLangGraph helped us scale from a structured RAG to a conversational Agent,  with offerings like the ReAct agent, which nows uses our original RAG as a Tool.\n\nLang’s tight integration with the OSS ecosystem and ML Flow allowed us to deeply instrument the runtime using a single autolog() call.\n\nI could go on but I’ll wrap it up with a rough Andrew Ng quote, and something I agree with:\n\n“Lang has the major abstractions I need for the toughest problems in AI Eng.”",
+    "score": 37
+  },
+  {
+    "type": "individual_post",
+    "title": "Beginner way to learn langchain",
+    "selftext": "Honestly been trying to comprehend langchain documention for 3 days now after using Gemini api. But after seeing langchain documention as beginner I felt super overwhelmed specially memory and tooling. Is there any path you guys can share which will help me learn langchain or is the framework too early to learn as beginner and suggest sticking to native Gemini api ? TIA",
+    "score": 32
+  },
+  {
+    "type": "individual_post",
+    "title": "LangChain vs LangGraph?",
+    "selftext": "Hey folks,\n\nI’m building a POC and still pretty new to AI, LangChain, and LangGraph. I’ve seen some comparisons online, but they’re a bit over my head.\n\nWhat’s the main difference between the two?\nWe’re planning to build a chatbot agent that connects to multiple tools and will be used by both technical and non-technical users. Any advice on which one to go with and why would be super helpful.\n\nThanks!",
+    "score": 34
+  },
+  {
+    "type": "individual_post",
+    "title": "Langchain is a total pain (rant)",
+    "selftext": "\nI just spent 6 hours banging my head against the wall trying to get Langchain to work. I'm using Windsurf IDE and I couldn't figure out why I kept getting errors. It was either a package thing or an import thing.\nI tried making a 'retrieval_chain' with an agent using function calling with Gemini.\nThen I saw a Pull Request on GitHub saying that the problem might be the Langchain package version and that I should reinstall...\nI'm done.\nI can share my code if anyone wants to see the mess.",
+    "score": 27
+  },
+  {
+    "type": "individual_post",
+    "title": "Is learning LangChain now worth the time considering number of no code tools now available?",
+    "selftext": "I have started to learn AI and how I can use them in real world applications. I came across LangChain and then found out bad reviews for it. It had a considerable hype, but now no one is talking about it. Should I invest time in learning it? Should even learn a framework or just go with no code tool?",
+    "score": 27
+  },
+  {
+    "type": "individual_post",
+    "title": "How do I build a LangChain SQL agent to talk to my Postgres DB? Migrating from n8n — need help!",
+    "selftext": "Hey LangChain community 👋\n\nI’m currently transitioning from a traditional backend developer role (Laravel + MySQL) to building more AI-powered tools, and I need some guidance from folks here.\nHere's what I’m trying to do:\n\nI want to build an AI agent (using LangChain) that can:\n\n    Connect to my PostgreSQL database\n\n    Understand natural language queries\n\n    Generate and run SQL queries\n\n    Return results in a human-readable format (maybe even with explanations)\n\nWhat I’ve tried so far:\n\n    I was using n8n’s SQL Agent for this (no-code platform), and while it worked at a basic level, it often gave me:\n\n        LangChain parser errors\n\n        Slow performance\n\n        Lack of transparency when things went wrong\n\nEventually, I realized n8n is using LangChain under the hood, so I figured — why not just use LangChain directly and gain full control?\nMy challenges/questions:\n\n    How do I properly set up a LangChain SQL agent for Postgres?\n\n    Any good starter templates or examples?\n\n    How do I handle safety checks? (e.g., to avoid DROP TABLE or dangerous queries)\n\n    Which LLM should I start with for this? I have access to OpenAI and open-source models like Ollama.\n\n    How do I improve speed and reliability compared to no-code platforms like n8n?\n\n    What’s the best way to structure the agent? Tool use? Memory? Custom prompts?\n\nAlso, I’m still new to Python, so if there are beginner-friendly tips on structuring the project, I’d really appreciate it.\n\nThanks in advance for any help! Would love to hear how others have built similar systems — or any gotchas I should watch out for.",
+    "score": 15
+  },
+  {
+    "type": "individual_post",
+    "title": "[Project] Built a full-stack conversational AI system with LangChain + Nuxt.js after a month of learning",
+    "selftext": "Just wrapped up my first serious LangChain project and wanted to share what I learned. Spent the last month diving deep into LangChain and built this conversational AI system from scratch. What I built:\n\n# \n\nWhat i built:\n\n* Frontend: Nuxt.js with real-time event streaming\n* Backend: FastAPI handling async conversations\n* Database: MongoDB for persistent chat history\n* AI: LangChain agents with Gemini 2.0 Flash\n* Features: Token generation, queue callbacks, custom prompt templates\n\nWhat i learned:\n\n* LangChain's agent orchestration is incredibly powerful\n* Event streaming makes conversations feel much more natural\n* Async processing is crucial for responsive AI apps\n* Managing conversation state is trickier than expected\n\nNext up:\n\nPlanning to integrate LangGraph for visual workflow management and more complex agent interactions.\n\nWould love feedback from anyone who's worked with similar stacks.\n\n[Github repo](https://github.com/afadel151/langchain)",
+    "score": 19
+  },
+  {
+    "type": "individual_post",
+    "title": "What is actually sent to the LLM to decide whether or not to call a tool?",
+    "selftext": "I'm working through the \"Build a Retrieval Augmented Generation (RAG) App: Part 2\" tutorial where you bind the retrieve function as a tool, and then add a conditional edge for when it is executed.\n\nI've been digging through the documentation, but I cannot seem to find an answer for the actual message sent to the LLM to instruct it to either use the retrieve tool or respond (as an example: \"If needed, use the retrieve tool to retrieve information related to a query. Otherwise respond directly\").\n\nThis tutorial also had the LLM rephrase the user queries when calling the retrieve tool.\n\nAlthough it doesn't stop me from proceeding, I would really like a look behind the hood as to what LangChain is sending when tools are binded to a ChatModel.\n\n  \nEDIT: Thank you for your help. I was unable to see this information because it is passed as a separate argument in the API (which is exactly the understanding I was trying to obtain). ",
+    "score": 23
+  },
+  {
+    "type": "individual_post",
+    "title": "Langchain or langgraph",
+    "selftext": "Hey everyone,\n\nI’m working on a POC and still getting up to speed with AI, LangChain, and LangGraph. I’ve come across some comparisons online, but they’re a bit hard to follow.\n\nCan someone explain the key differences between LangChain and LangGraph? We’re planning to build a chatbot agent that integrates with multiple tools, supports both technical and non-technical users, and can execute tasks. Any guidance on which to choose—and why—would be greatly appreciated.\n\nThanks in advance!\n",
+    "score": 14
+  },
+  {
+    "type": "individual_post",
+    "title": "Langchain for production?",
+    "selftext": "I am building a production grade AI application.\n\nI am in dilemma of choosing langchain or paydantic AI.  I kinda like pydantic agen framework for its typesafe apis. and i think lang chain is too much magic.\n\n  \nwhat are your thoughts. comment below",
+    "score": 16
+  },
+  {
+    "type": "individual_post",
+    "title": "I am considering using Langchain but unsure given the feedback I'm seeing online",
+    "selftext": "Hi all,\n\nI've been building an app which relies mostly on OpenAI currently (using assistants API and open AI vector stores). \n\nThis has worked fine mostly but in the past few months there have been newer, better models out there; this combined with the fact that assistants API doesn't get updates at the same speed that Chat completions API does I've decided that it's time to migrate off Open AI and be vendor agnostic.\n\nTo do this, I was considering Langchain. The basic idea here is I use langchain agents to run RAG on a Pinecone database (among other future integrations with an agent dedicated for each knowledge source) which passes data as a prompt to the user selected LLM to get back an output.\n\nHowever my research indicates overwhelmingly that people are very dissatisfied with Langchain and have migrated off it.\n\nQuestion: would you recommend using Langchain + agents to accomplish this in 2025? If not, are there other frameworks you can recommend which achieve a similar result?",
+    "score": 5
+  },
+  {
+    "type": "individual_post",
+    "title": "Does anyone use LangChain in production?",
+    "selftext": "",
+    "score": 13
+  },
+  {
+    "type": "individual_post",
+    "title": "Group for Langchain-Langsmith",
+    "selftext": "I am creating a group for people who are either trying to learn langchain or are making projects on langchain so as to help each other in learning more efficiently. Write in the comments or message me if you wanna get added!",
+    "score": 9
+  },
+  {
+    "type": "individual_post",
+    "title": "New to langchain and need a brief Roadmap",
+    "selftext": "I’m new to LangChain and really excited to dive in, but I’m not sure where to start. I’d really appreciate a brief roadmap or learning path to help guide me through the essentials.\n\nSome questions I have:\n\t•\tWhat should I learn first?\n\t•\tWhat are the core concepts I need to understand?\n\t•\tAre there any good beginner-friendly resources or projects to follow?",
+    "score": 10
+  },
+  {
+    "type": "individual_post",
+    "title": "Restaurant recommendation system using Langchain",
+    "selftext": "Hi, I'd like to build a multimodal with text and image data. The user can give the input, for example, \"A Gourmet restaurant with a night top view, The cuisine is Italian, with cozy ambience.\" The problem I'm facing is that I have text data for various cities available, but the image data needs to be scraped. However, scraping blocks the IP if done aggressively, which is necessary because the LLM should be trained on a large dataset. How do I collect the data, convert it, and feed it to my LLM. Also, if anyone knows the method or tools or any approach that is feasible is highly appreciated. \n\n  \nThanks in Advance!!!",
+    "score": 10
+  },
+  {
+    "type": "individual_post",
+    "title": "Looking for a few langchain learning buddies! 🤝",
+    "selftext": "Hey everyone!\n\nI'm starting my langchain journey, and honestly, learning alone feels overwhelming. I'd love to find **a few people** who want to learn together - whether you're a complete beginner like me or someone with some experience.\n\nMy idea is simple: we form a small group where we can:\n\n* Share what we're working on\n* Help each other when stuck\n* Maybe build a project together\n* Keep each other motivated\n\nI learn better when I can discuss things with others and bounce ideas off of them. Plus, it's more fun than staring at documentation alone!\n\nIf you're interested in joining a small, focused learning group, shoot me a **DM**.\n\nLooking forward to learning alongside some of you!",
+    "score": 5
+  },
+  {
+    "type": "comment_nuggets",
+    "comments": [
+      {
+        "body": "from langchain.relationships import Marriage\n\nMarriage.reset(keep_house=True, use_emotions=False)",
+        "score": 153
+      },
+      {
+        "body": "LangChain is such a mess. It's too big of a risk to use in production IMHO.",
+        "score": 152
+      },
+      {
+        "body": "By the time the book is released, everything will be deprecated in LangChain 🤣",
+        "score": 135
+      },
+      {
+        "body": "we are reading! we do spend a lot of time on this (revamped conceptual docs last week, working on tutorials this week). clearly we are still falling short.\n\nwhat would be really helpful is concrete examples. if youre able to share specific issues you ran into we can absolutely work on those. theres a lot in the langchain documentation, so this would help us narrow in on where to spend time",
+        "score": 87
+      },
+      {
+        "body": "I wanted to like langchain and have used it for a few projects. But i will probably never use it again because It’s unstable, the interface constantly changes, the documentation is regularly out of date, and the abstractions are overly complicated.",
+        "score": 77
+      },
+      {
+        "body": "I wouldn't say web developers specifically... In fact, don't put yourself in a box!\n\nStrap in!\n\nPersonally, I come from the opposite side as you...  \nI had been interested in computers & coding since I was a little kiddo, when I was 12-13 I finally decided it was time to spend my savings on a C++ book at the bookstore, then around 16 discovered neural networks (still before deep learning was a thing and multi-layer perceptrons > 1 hidden layer were thought by many to be infeasible at best and useless at worst)\n\nAnyways, I never really did much with AI except hobby projects due to the fact that the only cool stuff was happening in the quite limited academia community, and most of the real-life use cases were extremely boring and usually boiled down to optimizing business processes using (bad/limited) numerical data - and I loved coding cool things and having fun with my work.\n\nSome of the AI stuff I did for my hobby projects were:  \n\\- kaggle challenges  \n\\- reading & implementing the latest MLP papers  \n\\- I had a multi-year-long project generating piano MIDI by training on a MIDI dataset that I often would work on after working hours and during weekends.  \n\\- Made a poker bot using reinforcement learning (quite a challenge let me tell you)  \n\\- A bunch of other things that are just for fun\n\nDuring college, I would mostly end up not going to classes and just be building stuff in my bedroom instead. Nothing of real value to anyone except me, but I had a lot of interests and I get obsessive. My thing is basically, if I find something interesting, I HAVE to know how it works. \n\nOver the course of my life, this lead me to learning:  \n\\- Various languages: C++ Python PHP Delphi Pascal ...  \n\\- Webdev  \n\\- Game dev (Unity, unreal engine, played around a bit with cryengine long time ago)  \n\\- AI  \n\\- ...\n\n  \nEventually I dropped out of college to get a job instead so I could start planning to live together with my girlfriend (now my wife) not having a degree never held me back, I have never been rejected so far once I can get an interview, usually my portfolio was enough to get me in\n\nMy wife lets me chase my obsessions and no plans of ever having kids so my evenings and weekends usually consist of coding and writing/playing music.\n\nAnyways, I think right now, all of this lead me to end up at the perfect intersection here.  \nI have a ton of experience and intuition around AI, I know all the technical and scientific details, but I also have a ton of years of experience building enterprise software in a number of languages, in a number of environments.\n\nMy advice would be this: Learn programming patterns and learn to write good and clean code. A number of my colleagues really learnt a lot from \"Uncle Bob\" - Just type that into google you'll find him to be incredibly valuable and it doesn't matter if you are writing C++ or javascript or python, clean code & programming/design patterns such as singletons, inheritance, factory pattern, ... re-appear everywhere and will help you everywhere. Heck, Atomic Agents itself is inspired by \"Atomic Design\" which is actually a methodology for designing GUIs from small \"atomic\" components, but really the principles it is built on can be traced back decades...\n\nAnd that is how I realized that a framework like LangChain is useless and overcomplicated. One look at its code, combined with my knowledge of AI and software, made it very clear that it wasn't written by experienced developers that knew what they were doing but by people that were just learning things and prototyping -- Some people blame this on everything still being new when it was created but I call bullshit, I immediately recognized that LLMs are just \"input -> processing -> output\" (of course not in architecture, but in terms of how you use them), even advanced multi-agent systems are just a bunch of IPO modules, and IPO goes back 20+ years. Anything that tries to claim it does more than that is just ignorantly generating or going with the hype machine. AI is not magic, as you probably know very well being an AI student\n\nI hope this wall of text proves useful to you and anyone else who is wondering the same things.\n\nSo, tldr: Spend some time learning best practices, clean code, and programming patterns and generic concepts. These generic principles are portable throughout all of software and will serve you greatly!",
+        "score": 64
+      },
+      {
+        "body": "Exactly!\n\nMy current client hired me specifically to rid their codebase of LangChain. We are replacing it with Atomic Agents [https://github.com/BrainBlend-AI/atomic-agents](https://github.com/BrainBlend-AI/atomic-agents)\n\nIt is my own framework, but it is extremely, extremely lightweight, developer-centric and transparent. It essentially just provides a consistent way of creating & calling agents and tools, that's the tl;dr..\n\nIt has been growing a lot lately though due to the influx of other people frustrated with LangChain.\n\nAs a programmer with 15 years of experience delivering software with high code standards, I can confidently say, LangChain does not cut it.\n\nI would recommend either:  \n\\- Use whatever APIs directly for your LLM calls, in tiny projects  \n\\- Use something like Instructor if you require structured data  \n\\- Use something like Atomic Agents if you need to also use tools and want to have an extreme degree of consistency in your codebase...\n\nBut whatever you do, you should always at least know the underlying stuff...\n\nA lot of people jumped on the LangChain ship without understanding what it was doing and why you really don't need 99% of what's in the LangChain codebase\n\nYou do not need a 3rd party wrapper to have your agent interact with a vector DB, you just need proper input/output definitions and what that looks like can be so different from application to application you really need that full control & ownership",
+        "score": 37
+      },
+      {
+        "body": "Langchain helps you make LLM calls with structured data, tools, etc…\n\nLanggraph helps you build a whole complex workflow defined of a series of steps called nodes, each of which could be an LLM call, running some code, doing whatever. These nodes are connected by edges, which are basically the rules of once you finish one node which you go to next.\n\nWant to build a simple chat agent? Just use langchain. Want to build something like deep research? Use langgraph plus langchain.\n\nThis isn’t everything these tools are/do, but maybe it’s a helpful very very short version.",
+        "score": 39
+      },
+      {
+        "body": "We don't use Langchain anymore to do agentic AI. Most has switched to Langgraph",
+        "score": 41
+      },
+      {
+        "body": "Anyone with some experience in coding with LLM APIs could tell you LangChain is unnecessarily complex with excessive abstractions that only serve to make custom implementation more difficult.\n\nIt was never good, but people adopted it anyway because they didn't know any better.",
+        "score": 40
+      },
+      {
+        "body": "Langchain is great in production, as long as you're careful to stick to the core primitives and don't overly rely on community abstractions. Specifically, the runnable interface being used everywhere in langchain as a standard makes serving chains, graphs and simple LLM calls easily interchangeable, and all the endpoints we deploy using langserve serve those common functions as endpoints automatically. We also licensed and use an internally hosted Langsmith for observability, unit tests, and building datasets, which has been extremely helpful. The simple python decorator is easy to use, and parses out all kinds of metadata from any common langchain classes used all the way down the function stack. Was super impressed.",
+        "score": 30
+      },
+      {
+        "body": "That's because LangChain is awful, and the documentation is awful, it is not developer-friendly at all. They just had first-mover advantage, some VC connections, but in reality it's all made by a data scientist with 4 YoE at the time, as opposed to someone with a background in actual software dev and developer experience.\n\nMay I suggest you have a look at Atomic Agents: [https://github.com/BrainBlend-AI/atomic-agents](https://github.com/BrainBlend-AI/atomic-agents) with now just over 3K stars the feedback has been stellar and a lot of people are starting to prefer it over the others\n\nIt aims to be:  \n\\- Developer Centric  \n\\- Have a stable core  \n\\- Lightweight  \n\\- Everything is based around structured input&output  \n\\- Everything is based on solid programming principles  \n\\- Everything is **hyper self-consistent** (agents & tools are all just Input -> Processing -> Output, all structured)  \n\\- It's not painful like the langchain ecosystem :')  \n\\- It gives you 100% control over any agentic pipeline or multi-agent system, instead of relinquishing that control to the agents themselves like you would with CrewAI etc (which I found, most of my clients really need that control)\n\nHere are some articles, examples & tutorials (don't worry the medium URLs are not paywalled if you use these URLs)  \n**Intro**: [**https://medium.com/ai-advances/want-to-build-ai-agents-c83ab4535411?sk=b9429f7c57dbd3bda59f41154b65af35**](https://medium.com/ai-advances/want-to-build-ai-agents-c83ab4535411?sk=b9429f7c57dbd3bda59f41154b65af35)\n\n**Docs:** [**https://brainblend-ai.github.io/atomic-agents/**](https://brainblend-ai.github.io/atomic-agents/)\n\n**Quickstart examples**: [**https://github.com/BrainBlend-AI/atomic-agents/tree/main/atomic-examples/quickstart**](https://github.com/BrainBlend-AI/atomic-agents/tree/main/atomic-examples/quickstart)\n\n**A deep research example (Please note, this was made before OpenAI released their deep research so it's not that deep, but it can easily be extended to be as deep as you want)**: [**https://github.com/BrainBlend-AI/atomic-agents/tree/main/atomic-examples/deep-research**](https://github.com/BrainBlend-AI/atomic-agents/tree/main/atomic-examples/deep-research)\n\n**An agent that can orchestrate**\n\n**An agent that can orchestrate tool & agent calls**: [**https://github.com/BrainBlend-AI/atomic-agents/tree/main/atomic-examples/orchestration-agent**](https://github.com/BrainBlend-AI/atomic-agents/tree/main/atomic-examples/orchestration-agent)\n\n**A fun one, extracting a recipe from a Youtube video**: [**https://github.com/BrainBlend-AI/atomic-agents/tree/main/atomic-examples/youtube-to-recipe**](https://github.com/BrainBlend-AI/atomic-agents/tree/main/atomic-examples/youtube-to-recipe)\n\n**How to build agents with longterm memory:** [**https://generativeai.pub/build-smarter-ai-agents-with-long-term-persistent-memory-and-atomic-agents-415b1d2b23ff?sk=071d9e3b2f5a3e3adbf9fc4e8f4dbe27**](https://generativeai.pub/build-smarter-ai-agents-with-long-term-persistent-memory-and-atomic-agents-415b1d2b23ff?sk=071d9e3b2f5a3e3adbf9fc4e8f4dbe27)\n\nI looked at langchain, crewai, autogen, some low-code tools even, and as a developer with 15+ years experience I hated every single one of them - langchain/langgraph due to the fact it wasn't made by experienced developers and it really shows, plus they have 101 wrappers for things that don't need it and in fact, only hinder you (all it serves is as good PR to make VC happy and money for partnerships)\n\nCrewAI & Autogen couldn't give the control most CTOs are demanding, and most others even worse..\n\nSo, I made **Atomic Agents** out of spite and necessity for my own work, and now I end up getting hired specifically to rewrite codebases from langchain/langgraph to Atomic Agents, do PoCs with Atomic Agents, ... which I lowkey did not expect it to become this popular and praised, but I guess the most popular things are those that solve problems, and that is what I set out to do for myself before opensourcing it",
+        "score": 24
+      },
+      {
+        "body": "The main reason which is opinionated, that langchain is constantly growing, there are some rapid updates in their library. So developers have problems with maintaining the project . \n\nThese rapid updates frustrate a lot. I worked on this project in July 2024, in December I was trying to add more things into, there I got some errors on the framework feature which was there in July but now it is deprecated.",
+        "score": 35
+      },
+      {
+        "body": "The original versions of LangChain were released at an early stage of LLMs when the APIs were new. They got some of the abstractions wrong and it was unnecessarily complex.\n\nLangGraph is much, much better and they are building out tools to support it. Plus the documentation has taken a step up.\n\nThere are other frameworks out there that work well on some use cases, but for me it is still the best option out there.",
+        "score": 34
+      },
+      {
+        "body": "Im currently involved in a startup project, building RAG agents. I've just made the decision to migrate everything from Langchain to PydanticAI after a week of implementation.\n\nLangchain is just abstractions over abstractions over abstractions. The last drop was when I was trying to get even a simple conversational RAG bot to work - I had to dig through 4 different tutorial articles on the official Langchain site, each using a different version (none are compatible with the other), only to in the end resort to LangGraph agent",
+        "score": 26
+      },
+      {
+        "body": "What the heck is a no code tool? \n\nI don't think there's much to learn in langchain. It's more a \"learn as you go\" framework in my experience ",
+        "score": 30
+      },
+      {
+        "body": "I decided to return to langchain after a year. Nothing changed- still can’t find proper documentation for some classes or functions, things are still overly complicated, howtos are outdated and doesn’t reflect the current state of code. Generally it’s still a mess.  \nOh one thing changed- the entire framework. Smh",
+        "score": 28
+      },
+      {
+        "body": "Langchain was the first attempt to build a production-ready system around LLM use. I would argue that there were many wrong design decisions taken still, and the documentation generally has been poor. Today, I would not recommend it to most people.",
+        "score": 26
+      },
+      {
+        "body": "To be honest, I use it in production, our customers haven't complained or mentioned performance issues... so I think in a literal sense if you have tests for your backend in particular, langchain can be leveraged in production. At least langgraph definitely can be, which is core to our product...",
+        "score": 26
+      },
+      {
+        "body": "We started with Langchain, but removed everything related to it and built our own code. In production and running smooth",
+        "score": 26
+      },
+      {
+        "body": "Im on mobile so forgive the brief response. Pydantic AI and Pydantic Logfire. Prioritize that tooling over LangChain because as soon as you’ve moved beyond basics you’re going to regret how much effort you put into wrangling the mess that is LC.",
+        "score": 25
+      },
+      {
+        "body": "Sorry langchain, but I had to do this when I saw https://www.reddit.com/r/linuxsucks/s/HsGvdKp4sC . We’re good. ;)",
+        "score": 24
+      },
+      {
+        "body": "What in the lang of a messy thread is this? Langchain is adopted across the AI industry both at scale and at prototype levels. The angular to JS comparison might have some truth in it, but advantages of working with Langchain/graph/smith are more than obvious.\n\nFirst we have the fact that we can abstract and forget about all the lazy work that needs to go into building sophisticated agentic pipelines and enterprise oriented LLM products. When I’m building out our 100+ custom tool agents, I know what I can trust, rely on, and run with. \n\nAnd also have a clear idea of what I shouldn’t trust or use in ways that may be obvious at first. And so people on this thread claiming that their homebrewed and most likely half baked solutions can run as stable and predictable as lang endpoints, yeah that’s a lot of implied trust there. \n\nDo you really think your “proprietary” solution can stand up to what is now easily possible in stock lang setups? I’d be very surprised to find this to be true, and it can’t even be tested as the home baked solutions don’t have enough adoption or usability to actually know. Whereas with Langchain we now have very clear baselines, reproducible scenarios and general standards to adhere to.\n\nSecond, while those that insist on reinventing the wheel, while you are working on that new magnificent wheel, I’m already putting finishing touches on the sprawling canvases that modern personalized and backend-pipeline runners require. \n\nWhen you are developing and patching everything in yourself, Jerry rigging mass routes and endpoints, you’re essentially getting lost in the art of building AI infrastructure, instead of actually accomplishing the solutions for the ever vastly use cases and problems that people in the real world need solved. Oh and believe me, none of them give a flying duck about what chain or moonshine solution we’re cooking with, they just need reliability, speed and actual fit to what they need solved.\n\nThird, we have the interoperability and widely adopted ecosystem where ever single agent and multi-agent teams we put out, they all get monitored by LangSmith, Langfuse and Langwatch (yeah I like all 3 and don’t care how much redundancy that creates) and there is a very clear line of sight into the observability which is now synthesized by having all of those products work so closely together. Then we have the fact that Langchain is accessible and ultra stable and scalable provided that you operate it at an advanced level.\n\nSo in summary: use Langchain to focus on functionality and the creative aspects that provide usable and efficient solutions and forget the time it takes to doing it from scratch. Use your own custom solution when you have a very specific use case or you have exhausted your options within the Langchain/LlamaIndex frames. Use Langchain with AWS/GCP to achieve infinite scalability and seamless performance across a lot of interdependent parts. Use a custom built approach when you are an expert and can essentially replicate or significantly improve on Lang and then demonstrably achieve a large enough net gain effect to justify the time you invest into doing your own “framework”.",
+        "score": 5
+      },
+      {
+        "body": "It’s a series of well intentioned abstractions but over a shaky foundation, which feels prematurely engineered. think about like the magic sigils and state management of angular JS in the early days of the web 2.0, before it gave way to react - you were learning angular not javascript. Langchain feels a little like that- you’re learning langchain not the underlying primitives of building with LLMs. \n\nI love langchain as a project, but the ecosystem it’s building on is only just maturing, and it feels like it’s a tricky v1 of something that’s going to be amazing when it hits v2 or v3.",
+        "score": 17
+      },
+      {
+        "body": "Langchain beat that curve.  It hit the peak in the first few months and has stayed there since.",
+        "score": 22
+      },
+      {
+        "body": "sorry if it's a little out of topic, but I'd love to see your previous langchain implementation if possible! I'm working on something similar on PDFs with complex tables, and it'd be great if i could have some tips or a repository to reference, thanks! I'm currently orchestrating using LangGraph to build more complex agents.",
+        "score": 21
+      },
+      {
+        "body": "Because many companies are looking for AI engineers in general and have no idea about the solutions that these engineers implement. That’s why there are few job positions with LangChain",
+        "score": 21
+      },
+      {
+        "body": "Oh, a langchain summary explained by a llm, that could have be written 2 years ago, thanks !",
+        "score": 20
+      },
+      {
+        "body": "Let me start by saying that I think it is wrong to start with learning or teaching *any* framework if you don't know how to do things without the framework. Learn what different techniques are on their own and how to implement them, like RAG, ReACT, Chain-of-Thought, etc.—so you can actually understand what value a framework or library does (or doesn’t) bring to the table.\n\nNow, as a developer with 15 years of experience, knowing people are being taught to use LangChain straight out of the gate *really* makes me sad, because—let’s be honest—it’s objectively not a good choice, and I’ve met a lot of folks who can corroborate this.\n\nPersonally, I took a year off between clients to figure out what I could use to deliver AI projects in the fastest way possible, while still sticking to my principle of *only* delivering high-quality and maintainable code.\n\nAnd the sad truth is that out of everything I tried, LangChain might be the *worst* possible choice—while somehow also being the most popular. Common complaints on reddit and from my personal convos with devs & teamleads/CTOs are:\n\n* Unnecessary abstractions\n* The same feature being done in three different ways\n* Hard to customize\n* Hard to maintain (things break often between updates)\n\nPersonally, I took more than one deep-dive into its code-base and from the perspective of someone who has been coding for 15+ years, it is pretty horrendous in terms of programming patterns, best practices, etc... All things that should be **AT THE ABSOLUTE FOREFRONT of anything that is made for other developers!**\n\n**So, why is LangChain so popular?** Because it’s not just an open-source library, it’s a company with a CEO, investors, venture capital, etc. They took something that was never really built for the long-term and blew it up. Then they integrated every single prompt-engineering paper (ReACT, CoT, and so on) rather than just providing the tools to let you build your own approach. In reality, each method can be tweaked in hundreds of ways that the library just doesn’t allow you to do (easily).\n\nTheir core business is not providing you with the best developer experience or the most maintainable code; it’s about partnerships with every vector DB and search company (and hooking up with educators, too). That’s the only real reason people keep getting into LangChain: it’s just really popular.\n\n**The Minimalist Alternative: Atomic Agents**  \nYou don’t *need* to use Atomic Agents (heck, it might not even be the right fit for your use case), but here’s *why* I built it and made it open-source:\n\n1. I started out using the OpenAI API directly.\n2. I wanted structured output and not have to parse JSON manually, so I found “Guidance.” But after its API changed, I discovered “Instructor,” and I liked it more.\n3. With Instructor, I could easily switch to other language models or providers (Claude, Groq, etc.) without heavy rewrites, and it has a built-in retry mechanism.\n4. The missing piece was a consistent way to build AI applications—something minimalistic, letting me experiment quickly but still have maintainable, production-quality code.\n\nAfter trying out LangChain, crewai, autogen, langgraph, flowise, and so forth, I just kept coming back to a simpler approach. Eventually, after several rewrites, I ended up with what I now call Atomic Agents. Multiple companies have approached me about it as an alternative to LangChain, and I’m currently helping a client rewrite their codebase from LangChain to Atomic Agents because their CTO has the same maintainability concerns I did.\n\n**So why do you need Atomic Agents?** If you want the benefits of Instructor, coupled with a minimalist organizational layer that lets you experiment freely and still deliver production-grade code, then try it out. If you’re happy building from scratch, do that. The point is you *understand* the techniques first, and then pick your tools.\n\n[Here’s the repo if you want to take a look.](https://github.com/BrainBlend-AI/atomic-agents)",
+        "score": 1
+      },
+      {
+        "body": "Yes! Exactly this!!\n\nThe docs is a different level bad. Its almost impressive how off/behind they are. I had high hopes with the redesign that it will be fixed, and it still wasnt. \n\nAlso, we built a product when LangChain first came out, and in the 1ish year had over 150+ upgrades due to langchain releases of 2-3 every week (yet none were stable). Every 5th-ish release broke something. Eventually we realized it was easier to implement the functionality we needed directly. Also, after submitting 30+ GH issues with images, proper docs, examples, etc, most were ignored due to a bunch of releases being made quickly and the hope that \"they may have fixed\" things. In a group of 20+ developers, not one wanted to continue with langchain.",
+        "score": 12
+      },
+      {
+        "body": "When you first start with langchain it is excellent, then you get frustrated and start writing all your own work arounds and feel like you should build it from scratch, then you miss a lot of the convenience of things like stateful graph orchestration, then you rewrite and customize on top of those things to make langgraph better.  That's how I'd describe moving from the left tail to the right tail of that distribution.",
+        "score": 18
+      },
+      {
+        "body": "Langchain is a super fast evolving library so tools like cursor/windsurf may not work as well because of lack of context in training data. However langchain/langgraph is the best library out there for agents and I can't get why the unnecessary hate towards it in the last few days. \n\nI personally use perplexity a lot to search about langchain/langgraph stuff because it has access to the latest data.",
+        "score": 12
+      },
+      {
+        "body": "For me the only reason why I am still using langchain is for langgraph. It’s a fantastic framework that is super flexible to build complex systems. Sometimes I can get a bit complex I agree (have had issues with passing in states to agents) but langgraph is really great if you want to build a complex ai system",
+        "score": 17
+      },
+      {
+        "body": "Please fix the AI chat, too. It's not great. It couldn't even accurately describe langchain. It told me you guys are a crypto company.\n\n![gif](giphy|iDIJezAxNyRsZTx678)",
+        "score": 17
+      },
+      {
+        "body": "I feel some of these comments are strangely against langchain with very little substance just because it’s not chewed down into the simplest api possible, seems like people are unwilling to think, read and research now more than ever, everything has to be “easy” to use or it’s just not worth it. Don’t discard something because it’s hard to understand for YOU, if you want a toy level set of abstraction you can plug and play there’s libs for that, if a low level set of primitives are too hard to use and understand that’s just a skill issue not the framework. Just my two cents, if you didn’t learn it in one afternoon that’s ok, sometimes hard things take time.",
+        "score": 17
+      },
+      {
+        "body": "Not at all. Langchain is integration layer. Langgraph is their agent model. What I suspect happened with you is this: You put a pdf in the context window and the LLM is good at context retrieval. Perfect, its basically a chat app that you could talk to about your doc. \n\nIn many cases you wont be putting entire pdfs in the context, just pieces you need. If you are just doing prompt & response on a single document, yeah, you can script this kind of thing. But there is a lot more to workflow than reading docs.\n\nFor more complex workflows, you will need orchestration which is where LangChain & LangGraph shine. They can integrate a lot of different tools and build those agents to do things or make decisions.",
+        "score": 14
+      },
+      {
+        "body": "So, here's my take... I am an experienced software engineer (15+ years of experience), and I tested out all the LLM frameworks and libraries, most of them, LangChain included, were written by people rather inexperienced in creating tools for other developers to use, but were rather young data scientists themselves, not developer-experience engineers...\n\nMay I suggest you have a look at my framework, Atomic Agents: [https://github.com/BrainBlend-AI/atomic-agents](https://github.com/BrainBlend-AI/atomic-agents) with now just under 3K stars the feedback has been stellar and a lot of people are starting to prefer it over the others\n\nIt aims to be:  \n\\- Developer Centric  \n\\- Have a stable core  \n\\- Lightweight  \n\\- Everything is based around structured input&output  \n\\- Everything is based on solid programming principles  \n\\- Everything is **hyper self-consistent** (agents & tools are all just Input -> Processing -> Output, all structured)  \n\\- It's not painful like the langchain ecosystem :')  \n\\- It gives you 100% control over any agentic pipeline or multi-agent system, instead of relinquishing that control to the agents themselves like you would with CrewAI etc (which I found, most of my clients really need that control)\n\nHere are some articles, examples & tutorials (don't worry the medium URLs are not paywalled if you use these URLs)  \n**Intro**: [**https://medium.com/ai-advances/want-to-build-ai-agents-c83ab4535411?sk=b9429f7c57dbd3bda59f41154b65af35**](https://medium.com/ai-advances/want-to-build-ai-agents-c83ab4535411?sk=b9429f7c57dbd3bda59f41154b65af35)\n\n**Docs:** [**https://brainblend-ai.github.io/atomic-agents/**](https://brainblend-ai.github.io/atomic-agents/)\n\n**Quickstart examples**: [**https://github.com/BrainBlend-AI/atomic-agents/tree/main/atomic-examples/quickstart**](https://github.com/BrainBlend-AI/atomic-agents/tree/main/atomic-examples/quickstart)\n\n**A deep research example**: [**https://github.com/BrainBlend-AI/atomic-agents/tree/main/atomic-examples/deep-research**](https://github.com/BrainBlend-AI/atomic-agents/tree/main/atomic-examples/deep-research)\n\n**An agent that can orchestrate tool & agent calls**: [**https://github.com/BrainBlend-AI/atomic-agents/tree/main/atomic-examples/orchestration-agent**](https://github.com/BrainBlend-AI/atomic-agents/tree/main/atomic-examples/orchestration-agent)\n\n**A fun one, extracting a recipe from a Youtube video**: [**https://github.com/BrainBlend-AI/atomic-agents/tree/main/atomic-examples/youtube-to-recipe**](https://github.com/BrainBlend-AI/atomic-agents/tree/main/atomic-examples/youtube-to-recipe)\n\n**How to build agents with longterm memory:** [**https://generativeai.pub/build-smarter-ai-agents-with-long-term-persistent-memory-and-atomic-agents-415b1d2b23ff?sk=071d9e3b2f5a3e3adbf9fc4e8f4dbe27**](https://generativeai.pub/build-smarter-ai-agents-with-long-term-persistent-memory-and-atomic-agents-415b1d2b23ff?sk=071d9e3b2f5a3e3adbf9fc4e8f4dbe27)\n\nI think delivering quality software is important, but also realized if I was going to try to get clients, I had to be able to deliver fast as well.\n\nSo I looked at langchain, crewai, autogen, some low-code tools even, and as a developer with 15+ years experience I hated every single one of them - langchain/langgraph due to the fact it wasn't made by experienced developers and it really shows, plus they have 101 wrappers for things that don't need it and in fact, only hinder you (all it serves is as good PR to make VC happy and money for partnerships)\n\nCrewAI & Autogen couldn't give the control most CTOs are demanding, and most others even worse..\n\nSo, I made **Atomic Agents** out of spite and necessity for my own work, and now I end up getting hired specifically to rewrite codebases from langchain/langgraph to Atomic Agents, do PoCs with Atomic Agents, ... which I lowkey did not expect it to become this popular and praised, but I guess the most popular things are those that solve problems, and that is what I set out to do for myself before opensourcing it\n\nAlso created a subreddit for it just recently, it's still suuuuper young so nothing there really yet [**r/AtomicAgents**](https://www.reddit.com/r/AtomicAgents/)",
+        "score": 4
+      },
+      {
+        "body": "Are… are… you langchain?",
+        "score": 16
+      },
+      {
+        "body": "Not really. I tend to use a combination of custom code and specialized libraries atm. I'll pull in a structured generation library (outlines, instructor, guidance, etc..), an agent library (crewai, pydanticai, llama-index..), document ingestion library (usually llama-index), RAG libraries (usually libs that match the backing datastore/retrieval system + custom code), prompt management library (sometimes just a json file, sometimes more), evals library (depends on the situation), and I'll sometimes use types from langchain for simple things like message types.\n\nIf there's something I find in langchain that I really want to use but seems over engineered, then I'll just read the implementation and write my own code for it or find a separate library. On rare occasions I'll grab a small piece of langchain if its something that doesn't demand I pull everything in.\n\nIts not really a clean AIO solution, but I don't have stability issues and can isolate problems when they occur. Each individual library generally has good interfaces and reliable documentation since they don't have a huge surface areas they're trying to cover, its easier to shop around for something with amenable abstractions when I only need to use it for one thing. And updates in one area don't break everything else.\n\nSome specialized libraries, specifically the agent ones use langchain under the hood, same for some vector store libraries. I don't have any issue with that really as long as \\*I\\* don't have to deal with the langchain interfaces myself beyond a surface level.",
+        "score": 3
+      },
+      {
+        "body": "There is none. And actually Langchain has some strong recent case studies.\n\nI’m quite sure some other frameworks will pop up to compete with Langchain but as for today LangChain is the best you can get to build serious AI agents",
+        "score": 9
+      },
+      {
+        "body": "A major factor we have faced is that deploying a lang chain in production for enterprise customers is a pain. Two things we faced were \n\n1. The images containing python code with langchain got flagged a lot in security checked, a lot of dev time went into using alternatives, to get past that\n\n2. Clients have an internal proxy through which we need to access models, calling them using langchain did not always work, a lot of time went into finding the right way from langchain to do so.\n\nAt least I felt that time saved while using langchain, did not really gain us a lot overall.",
+        "score": 6
+      },
+      {
+        "body": "Hi, I think probably the easiest and most direct way to implement this would be setting the SQL connection through tools. \n\nI wrote a tutorial on how to do this with Arcade: [https://blog.arcade.dev/text-to-sql-2-0](https://blog.arcade.dev/text-to-sql-2-0)\n\nFull transparency, I am a developer advocate at Arcade, so *yes I am biased* towards using Arcade for these things. However, I still think it's by far the easiest way to achieve what you need, and here's a couple of extra tips:\n\n\\- If your agent needs WRITE access to the database, I personally DO NOT recommend you use a \"free\" Text-to-SQL prompt, as this can have undesired side effects (like inserting the wrong things). Instead, I'd strongly suggest to implement specific tools for whatever needs to be written, and having a specific tool for selects, which can rely on the LLM to write the SQL for you!\n\n\\- I think it's GREAT that you're using LangChain, for this agent, I'd use LangGraph for orchestration though, like they explain here: [https://langchain-ai.github.io/langgraph/concepts/multi\\_agent/](https://langchain-ai.github.io/langgraph/concepts/multi_agent/) I *think* you need a Supervisor topology here, but I recommend reading through that and figuring out what works best.\n\n\\- Then, give our docs a go, it's easier than you may think! [https://docs.arcade.dev/home/langchain/use-arcade-tools](https://docs.arcade.dev/home/langchain/use-arcade-tools)",
+        "score": 3
+      },
+      {
+        "body": "I moved from langchain to llamaindex to pydantic ai.\n\nEventually I just needed more control over agentic behavior and llamaindex’s abstractions made that too difficult.",
+        "score": 14
+      },
+      {
+        "body": "LangChain is a framework to build with LLMs, PineCone is a vector DB. How are the two interchangeable?",
+        "score": 14
+      },
+      {
+        "body": "Exactly, I have seen many times people saying that langchain/langgraph is not production ready, but never got details which is production ready",
+        "score": 13
+      },
+      {
+        "body": "Small example: In [ChatAnthropic](https://python.langchain.com/api_reference/anthropic/chat_models/langchain_anthropic.chat_models.ChatAnthropic.html#langchain_anthropic.chat_models.ChatAnthropic) the default `max_tokens` behavior is different than the default for [ChatOpenAI](https://python.langchain.com/api_reference/openai/chat_models/langchain_openai.chat_models.base.ChatOpenAI.html). On a hackathon project, I was using an Anthropic model with structured output. When it needed to generate more than the default `max_tokens`, it would simply not generate one of the output fields and then it'd fail the structured output parsing so the error messages pointed me towards structuring issues. In contrast, OpenAI doesn't set a `max_tokens` so that situation is much less likely.\n\nThe information IS in the documentation it's just way down the page. It'd be great if the defaults could be included in \"Key init args\" section.\n\nThat said, I was in a rush so I take some blame. And it's also partly about inconsistent APIs.\n\nI also had some challenges in the tutorials for map-reduce summarization with `load_summarize_chain` around July or August but it looks like those docs have been updated. I'll have to try out the new way to do it when I have some time.",
+        "score": 1
+      },
+      {
+        "body": "Yeah myths are amazing creatures, some have big horns and sparkly colors while others only present as stupid fecal matter. The myth about Langchain is of this peculiar fecal matter variety.\n\nThousands of startups are running serious traffic to millions of Lang backed endpoints. At all FAANG types, even with heavy internal and custom built frameworks, Lang is still consulted, referenced and at times used. \n\nIn my personal experience, I’ve been serving production endpoints with an all-in-Langchain setup and there are literally never any issues. The only issues that do arise are ones from my dumbblastic mistakes, meaning it’s all user error here if something is not “production ready”.\n\nMost likely this garden variety myth spreading was accomplished by those who had their own frameworks fail, or become irrelevant, or just implode because of how much they suck. So of course it’s then easy to sip a bit of haterade, roll up them sleeves and then go on internet troll missions, targeting the easiest target. \n\nLang ecosystem now represents the beacon and the moat that is generative AI, at least for the text modality. \n\nServing traffic in the thousands or the millions to: well configured Langchain is endpoints, internal “homebrew” Langchains, mega corporate big cloud Lang-like setups all accomplishes the same thing: calls being submitted to an API. So it’s really not a Langchain problem but a development competency problem. \n\nAs long as you know how to scale servers, configure load balancing and a myriad of other settings, you will get your magical token goodness. I recently saw someone talk about how Lang is so bloated and taxing. And that’s a lie in and of itself.\n\nIf you know how to build lang framed endpoints, only using what is absolutely necessary and applying a deep AI Dev Ops mindset, then an optimally built Lang API endpoint will perform just as fast, with as much throughput and pipeline quality. There may be some “bloat” in your repo but that bloat is irrelevant when a user simply sends a request to that endpoint. \n\nBe careful where you source your myths from as some are the best things in the world, and others just end up being poo poo colored fonkeys.",
+        "score": 1
+      },
+      {
+        "body": "I think we are in a \"2nd gen framework\" period where folks have a much better idea of what we are trying to build, but the new gen frameworks (PydanticAI, Atomic, ...) aren't production ready yet. Here are some things I think you want to keep in mind:\n\n\\- Most of your time building anything real is gonna be spent in prompt engineering, refining tools, and likely building some larger workflow. How can you protect that investment regardless of framework?\n\n\\- LLM routing is incredibly useful (swapping out different models), and is the biggest reason not to build against any foundation model's API directly.\n\n\\- We have found it very useful to be able to use agent B as a \"tool\" for agent A. This pattern comes up a ton in practice.\n\n\\- Today there are two types of agents: simple \"ReAct\" agents where the flow is determined by the LLM, and \"workflow\" agents with some kind amount of code doing the orchestration. It's hard to build anything super useful with simple ReAct, which is why so many people are using Langgraph in production. I think this is an area of innovation because langgraph is just too low-level.   \n  \nWe ended up building our own framework (supercog/agentic) cause I wasn't happy with the alternatives - you can see an example agent here: https://github.com/supercog-ai/agentic/blob/main/examples/people\\_researcher.py. We also ported the langchain open research agent, you can see it in the examples. I don't think there's any \"best alternative\" yet and we're all trying to find the right abstractions and trade-offs between LLM and deterministic orchestration.",
+        "score": 13
+      },
+      {
+        "body": "LangChain is a poorly engineered convoluted mess. I stopped after they introduced LCEL, came back for a [deeplearning.ai](http://deeplearning.ai) tutorial on LangGraph, did the exercise and had to notice that the exercise cookbook didn't work because it used an older version of LangChain. While I fixed the cookbook. I would never ever use something like this in production.",
+        "score": 10
+      },
+      {
+        "body": "It is working in *some* instances. It is working for this very simple script:\n\n    from langchain_openai import ChatOpenAI\n    \n    llm = ChatOpenAI()\n    llm.invoke(\"Hello, world!\")\n\nBut not for this:\n\n    from langchain_openai import ChatOpenAI\n    from langchain.prompts import ChatPromptTemplate\n    \n    prompt = ChatPromptTemplate.from_template(\"Tell me a joke about {topic}\")\n    model = ChatOpenAI()\n    \n    chain = prompt | model\n    \n    result = chain.invoke({\"topic\": \"ice cream\"})\n    print(result.content)\n\n(The latter, when I asked Claude+ChatGPT for help with why the official LangChain Tutorials were (/are) not tracing. (I've removed the stuff it placed in there for setting tracing manually, as it also didn't work!)\n\nAnd, I won't post here, but it's also not working for the official Tutorials. (I may have to see what running these outside of Jupyter does, despite the official suggestion being to do this).\n\nIs it **not** the case that LangChain automatically traces to LangSmith providing the environment variables are set correctly? Does it only work for certain types of method?",
+        "score": 1
+      }
+    ]
+  }
+]
